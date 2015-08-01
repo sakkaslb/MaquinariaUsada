@@ -6,5 +6,6 @@
     <string name="action_settings">Settings</string>
     <string name="login">Iniciar Sesión</string>
     <string name="btnLogin">Acceder</string>
+    <string name="chkOffline">Modo offline</string>
 
 </resources>
