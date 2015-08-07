@@ -3,7 +3,9 @@
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity"
+    android:background="@drawable/usadas"
+    >
 
 
     <LinearLayout
@@ -28,12 +30,14 @@
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="30dp"/>
             <EditText
-                android:layout_width="170dp"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:layout_marginLeft="30dp"
                 android:ems="10"
-                android:id="@+id/txtUsuario" />
+                android:id="@+id/txtUsuario"
+                android:hint="@string/lblUsuario"/>
+
 
          </LinearLayout>
         <LinearLayout
@@ -51,31 +55,27 @@
                 android:id="@+id/iconPassword" />
 
             <EditText
-                android:layout_width="170dp"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:layout_marginTop="30dp"
                 android:layout_marginLeft="30dp"
                 android:ems="10"
-                android:id="@+id/txtPassword" />
+                android:id="@+id/txtPassword"
+                android:hint="@string/lblContrasena"/>
 
         </LinearLayout>
 
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/chkOffline"
-            android:id="@+id/chkOffline"
-            android:layout_marginTop="30dp"
-            android:layout_gravity="center"/>
-
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:text="@string/btnLogin"
             android:id="@+id/btnLogin"
             android:layout_marginTop="50dp"
-            android:layout_gravity="center_horizontal" />
+            android:layout_marginLeft="60dp"
+            android:background="@color/background_material_dark"
+            android:textColor="@color/abc_secondary_text_material_dark"
+            android:layout_gravity="left" />
 
 
     </LinearLayout>
@@ -85,7 +85,7 @@
         android:layout_height="wrap_content"
         android:text="@string/login"
         android:id="@+id/LoginText"
-        android:textSize="30dp"
+        android:textSize="50dp"
         android:layout_gravity="center_horizontal"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
