@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">MaquinariaUsada</string>
+    <string name="app_name">Maquinaria Usada</string>
     <string name="hello_world">Hello world! Stefanie</string>
     <string name="action_settings">Settings</string>
     <string name="login">Iniciar Sesión</string>
