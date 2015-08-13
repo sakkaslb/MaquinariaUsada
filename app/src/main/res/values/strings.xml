@@ -3,11 +3,12 @@
 
     <string name="app_name">Maquinaria Usada</string>
     <string name="hello_world">Hello world! Stefanie</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Configuración</string>
     <string name="login">Iniciar Sesión</string>
     <string name="btnLogin">Acceder</string>
     <string name="chkOffline">Modo offline</string>
     <string name="lblUsuario">Usuario</string>
     <string name="lblContrasena">Contraseña</string>
+    <string name="cotizaciones">Ver últimas cotizaciones</string>
 
 </resources>
