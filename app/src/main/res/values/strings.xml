@@ -10,5 +10,14 @@
     <string name="lblUsuario">Usuario</string>
     <string name="lblContrasena">Contraseña</string>
     <string name="cotizaciones">Ver últimas cotizaciones</string>
+    <string name="lblBusqueda">Ordenar por:</string>
+    <string-array name="orden">
+        <item>Más recientes</item>
+        <item>Precio: Menor a Mayor</item>
+        <item>Precio: Mayor a Menor</item>
+        <item>% de Descuento</item>
+        <item>A-Z</item>
+    </string-array>
 
 </resources>
+
