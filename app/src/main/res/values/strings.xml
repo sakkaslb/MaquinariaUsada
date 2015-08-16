@@ -4,11 +4,15 @@
     <string name="app_name">Maquinaria Usada</string>
     <string name="hello_world">Hello world! Stefanie</string>
     <string name="action_settings">Configuración</string>
+
+    <!--Login-->
     <string name="login">Iniciar Sesión</string>
     <string name="btnLogin">Acceder</string>
     <string name="chkOffline">Modo offline</string>
     <string name="lblUsuario">Usuario</string>
     <string name="lblContrasena">Contraseña</string>
+
+    <!--Main-->
     <string name="cotizaciones">Ver últimas cotizaciones</string>
     <string name="lblBusqueda">Ordenar por:</string>
     <string-array name="orden">
@@ -18,6 +22,13 @@
         <item>% de Descuento</item>
         <item>A-Z</item>
     </string-array>
+    <string name="lblFamilia">Familia:</string>
+    <string name="lblModelo">Modelo:</string>
+    <string name="lblPrecio">Precio:</string>
+    <string name="lblRegion">Región:</string>
+    <string name="lblUbicacion">Ubicación:</string>
+    <string name="lblAnio">Año:</string>
+    <string name="btnFiltrar">Filtrar</string>
 
 </resources>
 

@@ -73,9 +73,8 @@
             android:id="@+id/btnLogin"
             android:layout_marginTop="50dp"
             android:layout_marginLeft="60dp"
-            android:background="@color/background_material_dark"
-            android:textColor="@color/abc_secondary_text_material_dark"
-            android:layout_gravity="left" />
+            android:layout_gravity="left"
+            style="@style/button"/>
 
 
     </LinearLayout>

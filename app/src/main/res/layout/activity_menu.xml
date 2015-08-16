@@ -16,32 +16,192 @@
         android:layout_below="@+id/tool_bar"
         android:id="@+id/linearLayout2">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/lblBusqueda"
-            android:id="@+id/lblBusqueda"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="10dp"
-            android:layout_gravity="left"
-            android:textColor="@color/ColorSecondaryLight" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:paddingLeft="@dimen/size"
+            android:paddingRight="@dimen/size"
+            android:paddingTop="@dimen/size3">
 
-        <Spinner
-            android:layout_width="129dp"
-            android:layout_height="35dp"
-            android:layout_toRightOf="@+id/lblBusqueda"
-            android:layout_marginTop="15dp"
-            android:id="@+id/opOrden"
-            android:spinnerMode="dropdown" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lblBusqueda"
+                android:id="@+id/lblBusqueda"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="left"
+                style="@style/textlight"  />
+
+            <Spinner
+                android:layout_width="129dp"
+                android:layout_height="35dp"
+                android:layout_toRightOf="@+id/lblBusqueda"
+                android:layout_marginTop="15dp"
+                android:id="@+id/cmbOrden"
+                android:spinnerMode="dropdown" />
+        </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lblFamilia"
+                    android:id="@+id/lblFamilia"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="left"
+                    style="@style/textlight"  />
+
+                <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/lblFamilia"
+                    android:layout_marginTop="15dp"
+                    android:id="@+id/cmbFamilia"
+                    android:spinnerMode="dropdown" />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lblModelo"
+                    android:id="@+id/lblModelo"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="left"
+                    style="@style/textlight"  />
+
+                <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/lblModelo"
+                    android:layout_marginTop="15dp"
+                    android:id="@+id/cmbModelo"
+                    android:spinnerMode="dropdown" />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lblPrecio"
+                    android:id="@+id/lblPrecio"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="left"
+                    style="@style/textlight"  />
+
+                <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/lblPrecio"
+                    android:layout_marginTop="15dp"
+                    android:id="@+id/cmbPrecio"
+                    android:spinnerMode="dropdown" />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lblRegion"
+                    android:id="@+id/lblRegion"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="left"
+                    style="@style/textlight"  />
+
+                <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/lblRegion"
+                    android:layout_marginTop="15dp"
+                    android:id="@+id/cmbRegion"
+                    android:spinnerMode="dropdown" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lblUbicacion"
+                    android:id="@+id/lblUbicacion"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="left"
+                    style="@style/textlight"  />
+
+                <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/lblUbicacion"
+                    android:layout_marginTop="15dp"
+                    android:id="@+id/cmb"
+                    android:spinnerMode="dropdown" />
+            </LinearLayout>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/btnFiltrar"
+                android:id="@+id/btnFiltrar"
+                android:layout_gravity="center_horizontal"
+                style="@style/button"/>
+
+        </LinearLayout>
+
     </RelativeLayout>
 
-    <TableLayout
+    <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:layout_alignBottom="@+id/linearLayout2"
         android:layout_toRightOf="@+id/linearLayout2"
-        android:background="@color/ColorSecondaryDark"
-        android:layout_toEndOf="@+id/linearLayout2"></TableLayout>
+        android:layout_toEndOf="@+id/linearLayout2">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/scrollView" >
+
+            <TableLayout
+                android:layout_marginTop="@dimen/size4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/linearLayout2"
+                android:background="@color/ColorSecondaryDark">
+
+
+            </TableLayout>
+        </ScrollView>
+
+    </RelativeLayout>
 
 
 </RelativeLayout>

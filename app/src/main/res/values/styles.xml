@@ -6,6 +6,25 @@
         <item name="colorPrimary">@color/ColorPrimary</item>
         <item name="colorPrimaryDark">@color/ColorPrimaryDark</item>
     </style>
-
+    <style name="root">
+        <item name="android:layout_margin">@dimen/margin3</item>
+    </style>
+    <style name="margin1">
+        <item name="android:layout_marginBottom">@dimen/margin2</item>
+        <item name="android:layout_marginTop">@dimen/margin2</item>
+    </style>
+    <style name="button">
+        <item name="android:background">@color/ColorSecondaryDark</item>
+        <item name="android:textColor">@color/ColorSecondaryLight</item>
+        <item name="android:textSize">@dimen/size3</item>
+    </style>
+    <style name="textlight">
+        <item name="android:textSize">@dimen/size2</item>
+        <item name="android:textColor">@color/ColorSecondaryLight</item>
+    </style>
+    <style name="textDark">
+        <item name="android:textSize">@dimen/size2</item>
+        <item name="android:textColor">@color/ColorSecondaryDark</item>
+    </style>
 
 </resources>
