@@ -17,6 +17,7 @@
         <item name="android:background">@color/ColorSecondaryDark</item>
         <item name="android:textColor">@color/ColorSecondaryLight</item>
         <item name="android:textSize">@dimen/size3</item>
+        <item name="android:layout_marginTop">@dimen/size</item>
     </style>
     <style name="textlight">
         <item name="android:textSize">@dimen/size2</item>
@@ -25,6 +26,7 @@
     <style name="textDark">
         <item name="android:textSize">@dimen/size2</item>
         <item name="android:textColor">@color/ColorSecondaryDark</item>
+
     </style>
 
 </resources>

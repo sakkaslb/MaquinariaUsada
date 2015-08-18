@@ -29,6 +29,49 @@
     <string name="lblUbicacion">Ubicación:</string>
     <string name="lblAnio">Año:</string>
     <string name="btnFiltrar">Filtrar</string>
+    <string name="lblVerPromos">Ver promociones</string>
+    <string name="lblVerFiltros">Ver filtros de búsqueda</string>
+    <string name="lblSi">Si</string>
+    <string name="lblNo">No</string>
 
+    <!--Listados filtros en Main-->
+    <string-array name="Familias">
+        <item>Accesorios</item>
+        <item>Cargadoras</item>
+        <item>Compactadoras</item>
+        <item>Equipos agrícolas</item>
+        <item>Equipos de trituración</item>
+        <item>Excavadoras</item>
+        <item>Generación de energía</item>
+        <item>Grúas</item>
+        <item>Manipuladores telescópicos</item>
+        <item>Minicargadoras</item>
+        <item>Miniexcavadoras</item>
+        <item>Montacargas</item>
+        <item>Motoniveladoras</item>
+        <item>Motores</item>
+        <item>Retroexcavadoras</item>
+        <item>Tractores</item>
+    </string-array>
+
+    <string-array name="Precios">
+        <item>Menor a 25.000</item>
+        <item>25.000 a 35.000</item>
+        <item>35.000 a 50.000</item>
+        <item>50.000 en adelante</item>
+    </string-array>
+    <string-array name="Regiones">
+        <item>Costa/Austro</item>
+        <item>Sierra/Oriente</item>
+    </string-array>
+    <string-array name="Ubicacion">
+        <item>Patio IIASA Guayaquil</item>
+        <item>Patio IIASA Quito</item>
+        <item>Patio Cliente</item>
+    </string-array>
+
+    <!--Activity Anuncio Small-->
+    <string name="lblHoras">Horas: 1000</string>
+    <string name="lblGarantia">Garantia: Sin garantia</string>
 </resources>
 

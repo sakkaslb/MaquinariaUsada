@@ -1,178 +1,245 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MenuActivity">
-    <include android:id="@+id/tool_bar"  layout="@layout/tool_bar"/>
+
+    <include
+        android:id="@+id/tool_bar"
+        layout="@layout/tool_bar" />
 
     <RelativeLayout
-        android:orientation="vertical"
+        android:id="@+id/linearLayout2"
         android:layout_width="250dp"
         android:layout_height="fill_parent"
-        android:background="@color/ColorPrimaryDark"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/tool_bar"
-        android:id="@+id/linearLayout2">
+        android:background="@color/ColorPrimaryDark"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
+            android:orientation="vertical"
             android:paddingLeft="@dimen/size"
             android:paddingRight="@dimen/size"
-            android:paddingTop="@dimen/size3">
+            android:paddingTop="@dimen/size3"
+            android:id="@+id/LayoutFiltros"
+            >
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/lblBusqueda"
-                android:id="@+id/lblBusqueda"
-                android:layout_marginTop="30dp"
-                android:layout_marginLeft="10dp"
-                android:layout_gravity="left"
-                style="@style/textlight"  />
-
-            <Spinner
-                android:layout_width="129dp"
-                android:layout_height="35dp"
-                android:layout_toRightOf="@+id/lblBusqueda"
-                android:layout_marginTop="15dp"
-                android:id="@+id/cmbOrden"
-                android:spinnerMode="dropdown" />
-        </LinearLayout>
-            <LinearLayout
-                android:orientation="horizontal"
+            <ScrollView
+                android:id="@+id/scrollView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/lblFamilia"
-                    android:id="@+id/lblFamilia"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_gravity="left"
-                    style="@style/textlight"  />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="vertical">
 
-                <Spinner
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/lblFamilia"
-                    android:layout_marginTop="15dp"
-                    android:id="@+id/cmbFamilia"
-                    android:spinnerMode="dropdown" />
-            </LinearLayout>
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/lblModelo"
-                    android:id="@+id/lblModelo"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_gravity="left"
-                    style="@style/textlight"  />
+                        <TextView
+                            android:id="@+id/lblBusqueda"
+                            style="@style/textlight"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="30dp"
+                            android:text="@string/lblBusqueda" />
 
-                <Spinner
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/lblModelo"
-                    android:layout_marginTop="15dp"
-                    android:id="@+id/cmbModelo"
-                    android:spinnerMode="dropdown" />
-            </LinearLayout>
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                        <Spinner
+                            android:id="@+id/cmbOrden"
+                            android:layout_width="129dp"
+                            android:layout_height="35dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_toRightOf="@+id/lblBusqueda"
+                            android:spinnerMode="dropdown" />
+                    </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/lblPrecio"
-                    android:id="@+id/lblPrecio"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_gravity="left"
-                    style="@style/textlight"  />
+                    <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginBottom="@dimen/size2"
+                        android:layout_marginTop="@dimen/size2"
+                        android:background="@android:color/darker_gray" />
 
-                <Spinner
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/lblPrecio"
-                    android:layout_marginTop="15dp"
-                    android:id="@+id/cmbPrecio"
-                    android:spinnerMode="dropdown" />
-            </LinearLayout>
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/lblRegion"
-                    android:id="@+id/lblRegion"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_gravity="left"
-                    style="@style/textlight"  />
+                        <TextView
+                            android:id="@+id/lblFamilia"
+                            style="@style/textlight"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="30dp"
+                            android:text="@string/lblFamilia" />
 
-                <Spinner
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/lblRegion"
-                    android:layout_marginTop="15dp"
-                    android:id="@+id/cmbRegion"
-                    android:spinnerMode="dropdown" />
+                        <Spinner
+                            android:id="@+id/cmbFamilia"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right"
+                            android:layout_marginTop="15dp"
+                            android:layout_toRightOf="@+id/lblFamilia"
+                            android:spinnerMode="dropdown" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/lblModelo"
+                            style="@style/textlight"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="30dp"
+                            android:text="@string/lblModelo" />
+
+                        <EditText
+                            android:id="@+id/txtModelo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/lblPrecio"
+                            style="@style/textlight"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="30dp"
+                            android:text="@string/lblPrecio" />
+
+                        <Spinner
+                            android:id="@+id/cmbPrecio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right"
+                            android:layout_marginTop="15dp"
+                            android:layout_toRightOf="@+id/lblPrecio"
+                            android:spinnerMode="dropdown" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/lblRegion"
+                            style="@style/textlight"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="30dp"
+                            android:text="@string/lblRegion" />
+
+                        <Spinner
+                            android:id="@+id/cmbRegion"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right"
+                            android:layout_marginTop="15dp"
+                            android:layout_toRightOf="@+id/lblRegion"
+                            android:spinnerMode="dropdown" />
 
 
-            </LinearLayout>
+                    </LinearLayout>
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/lblUbicacion"
-                    android:id="@+id/lblUbicacion"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_gravity="left"
-                    style="@style/textlight"  />
+                        <TextView
+                            android:id="@+id/lblUbicacion"
+                            style="@style/textlight"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="30dp"
+                            android:text="@string/lblUbicacion" />
 
-                <Spinner
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/lblUbicacion"
-                    android:layout_marginTop="15dp"
-                    android:id="@+id/cmb"
-                    android:spinnerMode="dropdown" />
-            </LinearLayout>
+                        <Spinner
+                            android:id="@+id/cmbUbicacion"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right"
+                            android:layout_marginTop="15dp"
+                            android:layout_toRightOf="@+id/lblUbicacion"
+                            android:spinnerMode="dropdown" />
+                    </LinearLayout>
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/btnFiltrar"
-                android:id="@+id/btnFiltrar"
-                android:layout_gravity="center_horizontal"
-                style="@style/button"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/lblPromociones"
+                            style="@style/textlight"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="30dp"
+                            android:text="@string/lblVerPromos" />
+
+                        <Switch
+                            android:id="@+id/txtVerPromos"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right"
+                            android:layout_marginLeft="@dimen/size"
+                            android:textOn="@string/lblSi"
+                            android:textOff="@string/lblNo"
+                            android:checked="true"
+                            android:gravity="center_horizontal" />
+
+
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/btnFiltrar"
+                        style="@style/button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/btnFiltrar" />
+
+                    <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="1dp"
+                        android:background="@android:color/darker_gray" />
+                </LinearLayout>
+            </ScrollView>
+
 
         </LinearLayout>
 
@@ -182,26 +249,37 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_alignBottom="@+id/linearLayout2"
-        android:layout_toRightOf="@+id/linearLayout2"
-        android:layout_toEndOf="@+id/linearLayout2">
+        android:layout_toEndOf="@+id/linearLayout2"
+        android:layout_toRightOf="@+id/linearLayout2">
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/scrollView" >
 
-            <TableLayout
-                android:layout_marginTop="@dimen/size4"
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/linearLayout2"
-                android:background="@color/ColorSecondaryDark">
+                android:layout_height="wrap_content">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="@string/lblVerFiltros"
+                    android:id="@+id/lblVerFiltros"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="@dimen/size"
+                    android:layout_marginTop="75dp"/>
 
-            </TableLayout>
-        </ScrollView>
+                <ToggleButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_gravity="right"
+                    android:text="Ver filtros"
+                    android:layout_marginRight="@dimen/size"
+                    android:checked="true"
+                    android:id="@+id/btnVerFiltros" />
+            </LinearLayout>
+
 
     </RelativeLayout>
-
 
 </RelativeLayout>
