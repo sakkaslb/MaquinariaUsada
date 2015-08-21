@@ -11,6 +11,7 @@
     <string name="chkOffline">Modo offline</string>
     <string name="lblUsuario">Usuario</string>
     <string name="lblContrasena">Contraseña</string>
+    <string name="lblRegistrarse">No tienes cuenta? Regístrate</string>
 
     <!--Main-->
     <string name="cotizaciones">Ver últimas cotizaciones</string>
@@ -31,6 +32,7 @@
     <string name="btnFiltrar">Filtrar</string>
     <string name="lblVerPromos">Ver promociones</string>
     <string name="lblVerFiltros">Ver filtros de búsqueda</string>
+    <string name="lblEquipos">Equipos en Stock</string>
     <string name="lblSi">Si</string>
     <string name="lblNo">No</string>
 

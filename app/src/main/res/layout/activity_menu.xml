@@ -256,27 +256,59 @@
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="75dp">
 
-                <TextView
+                <LinearLayout
+                    android:orientation="horizontal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="@string/lblVerFiltros"
-                    android:id="@+id/lblVerFiltros"
-                    android:layout_gravity="right"
-                    android:layout_marginRight="@dimen/size"
-                    android:layout_marginTop="75dp"/>
+                    android:layout_height="fill_parent">
 
-                <ToggleButton
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="@string/lblEquipos"
+                        android:layout_marginLeft="@dimen/size3"
+                        android:id="@+id/lblTitulo"
+                        android:layout_gravity="left" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
                     android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center_horizontal|right">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="@string/lblVerFiltros"
+                        android:id="@+id/lblVerFiltros"
+                        android:layout_marginRight="@dimen/size" />
+                    <ToggleButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ver filtros"
+                        android:layout_marginRight="@dimen/size"
+                        android:checked="true"
+                        android:id="@+id/btnVerFiltros" />
+
+
+                </LinearLayout>
+
+                <GridView
+                    android:id="@+id/gridView1"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:layout_gravity="right"
-                    android:text="Ver filtros"
-                    android:layout_marginRight="@dimen/size"
-                    android:checked="true"
-                    android:id="@+id/btnVerFiltros" />
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/textView1"
+                    android:background="@color/ColorPrimary"
+                    android:numColumns="3" >
+
+                </GridView>
+
             </LinearLayout>
 
 

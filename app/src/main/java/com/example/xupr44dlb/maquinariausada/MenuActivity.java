@@ -1,5 +1,6 @@
 package com.example.xupr44dlb.maquinariausada;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -19,6 +20,8 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.ToggleButton;
 
+import java.util.ArrayList;
+
 public class MenuActivity extends AppCompatActivity implements View.OnClickListener, AdapterViewCompat.OnItemSelectedListener{
     private Toolbar toolbar;
     Button btnFiltrar;
@@ -30,8 +33,10 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     LinearLayout filtrosLayout;
     RelativeLayout filtrospadreLayout;
     GridView grid;
-
-
+    ArrayList prgmName;
+    Context context;
+    public static String [] prgmNameList={"Let Us C","c++","JAVA","Jsp","Microsoft .Net","Android","PHP","Jquery","JavaScript"};
+    public static int [] prgmImages={R.drawable.ic_iiasa,R.drawable.ic_iiasa,R.drawable.ic_iiasa,R.drawable.ic_iiasa,R.drawable.ic_iiasa,R.drawable.ic_iiasa,R.drawable.ic_iiasa,R.drawable.ic_iiasa,R.drawable.ic_iiasa};
     protected void onCreate(Bundle savedInstanceState){
 
         super.onCreate(savedInstanceState);
@@ -89,7 +94,9 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         adaptador.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         cmbRegion.setAdapter(adaptador);
 
-
+        //Gridview
+        grid=(GridView) findViewById(R.id.gridView1);
+        grid.setAdapter(new CustomAdapter(this,prgmNameList,prgmImages));
     }
 
     @Override

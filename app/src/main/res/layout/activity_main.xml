@@ -76,6 +76,17 @@
             android:layout_gravity="left"
             style="@style/button"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/lblRegistrarse"
+            android:id="@+id/lblRegistrate"
+            android:layout_marginLeft="70dp"
+            android:layout_marginTop="25dp"
+            android:textStyle="bold"
+            android:textColor="#ff3666ff" />
+
 
     </LinearLayout>
 
