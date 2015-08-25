@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.view.animation.TranslateAnimation;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -36,7 +38,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     ArrayList prgmName;
     Context context;
     public static String [] prgmNameList={"Let Us C","c++","JAVA","Jsp","Microsoft .Net","Android","PHP","Jquery","JavaScript"};
-    public static int [] prgmImages={R.drawable.ic_iiasa,R.drawable.ic_iiasa,R.drawable.ic_iiasa,R.drawable.ic_iiasa,R.drawable.ic_iiasa,R.drawable.ic_iiasa,R.drawable.ic_iiasa,R.drawable.ic_iiasa,R.drawable.ic_iiasa};
+    public static int [] prgmImages={R.drawable.maquina,R.drawable.maquina,R.drawable.maquina,R.drawable.ic_iiasa,R.drawable.ic_iiasa,R.drawable.ic_iiasa,R.drawable.ic_iiasa,R.drawable.ic_iiasa,R.drawable.ic_iiasa};
     protected void onCreate(Bundle savedInstanceState){
 
         super.onCreate(savedInstanceState);
@@ -128,6 +130,9 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
             {
                if(btnVerFiltros.isChecked())
                {
+                   TranslateAnimation anim = new TranslateAnimation(-100f, 0f, 0f, 0f);
+                   anim.setDuration(500);
+                   filtrospadreLayout.setAnimation(anim);
                    filtrosLayout.setVisibility(View.VISIBLE);
                    filtrospadreLayout.setVisibility(View.VISIBLE);
 

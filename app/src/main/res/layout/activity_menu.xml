@@ -28,6 +28,7 @@
             android:paddingRight="@dimen/size"
             android:paddingTop="@dimen/size3"
             android:id="@+id/LayoutFiltros"
+            style="@style/PopupAnimationFilters"
             >
 
             <ScrollView
@@ -257,7 +258,8 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="75dp">
+                android:layout_marginTop="5dp"
+                android:layout_alignParentBottom="true">
 
                 <LinearLayout
                     android:orientation="horizontal"
@@ -267,11 +269,12 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
                         android:text="@string/lblEquipos"
                         android:layout_marginLeft="@dimen/size3"
+                        android:layout_marginTop="25dp"
                         android:id="@+id/lblTitulo"
-                        android:layout_gravity="left" />
+                        android:layout_gravity="left"
+                        android:textSize="30dp"/>
 
                 </LinearLayout>
 
@@ -304,8 +307,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_below="@+id/textView1"
-                    android:background="@color/ColorPrimary"
-                    android:numColumns="3" >
+                    android:numColumns="3"
+                    android:background="@color/ColorSecondaryDark">
 
                 </GridView>
 

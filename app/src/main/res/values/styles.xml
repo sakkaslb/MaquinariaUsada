@@ -29,4 +29,29 @@
 
     </style>
 
-</resources>
+    <style name="PopupAnimation" parent="@android:style/Animation">
+        <item name="android:windowEnterAnimation">@anim/slide_in</item>
+        <item name="android:windowExitAnimation">@anim/slide_out</item>
+    </style>
+
+
+    <style name="PopupAnimationFilters" parent="@android:style/Animation">
+        <item name="android:windowEnterAnimation">@anim/slide_left_right</item>
+        <item name="android:windowExitAnimation">@anim/slide_right_left</item>
+    </style>
+
+    <style name="Theme.FloatingWindow.Popup" parent="Theme.AppCompat.Light.NoActionBar" >
+
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowSoftInputMode">stateUnchanged</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowActionModeOverlay">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowAnimationStyle">@style/PopupAnimation</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
+
+    </style>
+
+ </resources>

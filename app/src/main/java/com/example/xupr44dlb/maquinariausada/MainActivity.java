@@ -7,24 +7,21 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements View.OnClickListener{
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Button btnLogin=(Button) findViewById(R.id.btnLogin);
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                Intent vintent=new Intent(MainActivity.this, MenuActivity.class);
-                startActivity(vintent);
-            }
-        });
-
+        btnLogin.setOnClickListener(this);
+        TextView lblRegistrate=(TextView) findViewById(R.id.lblRegistrate);
+        lblRegistrate.setOnClickListener(this);
 
     }
 
@@ -50,5 +47,24 @@ public class MainActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btnLogin:{
+                Intent vintent=new Intent(MainActivity.this, MenuActivity.class);
+                startActivity(vintent);
+                break;
+            }
+            case R.id.lblRegistrate:{
+                Intent vintent=new Intent(MainActivity.this,RegistroActivity.class);
+                vintent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(vintent);
+                break;
+            }
+
+        }
     }
 }

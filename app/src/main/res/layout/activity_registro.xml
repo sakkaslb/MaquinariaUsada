@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegistroActivity"
+    android:background="@color/white">
+
+    <include
+        android:id="@+id/tool_bar"
+        layout="@layout/tool_bar" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="55dp"
+        android:textColor="@color/ColorPrimaryDark"
+        android:text="@string/lblRegistro_titulo"
+        android:id="@+id/textView"
+        android:layout_marginLeft="@dimen/size4"
+        android:paddingLeft="@dimen/size3"
+        android:layout_marginTop="@dimen/size3"
+        android:gravity="left"
+        android:layout_gravity="left" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_usuario"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="30dp"
+            android:id="@+id/iconRegistroNombre" />
+
+        <EditText
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="30dp"
+            android:ems="10"
+            android:id="@+id/txtRegistro_Nombre"
+            android:hint="@string/lblRegistro_nombre"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/iconRegistroUsuario"
+            android:src="@drawable/ic_email"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="30dp"/>
+        <EditText
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="30dp"
+            android:inputType="textEmailAddress"
+            android:ems="10"
+            android:id="@+id/txtRegistroUsuario"
+            android:hint="@string/lblRegistro_email"/>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="30dp"
+            android:id="@+id/iconRegistroPassword" />
+
+        <EditText
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="30dp"
+            android:ems="10"
+            android:id="@+id/txtRegistro_Password"
+            android:hint="@string/lblContrasena"/>
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:text="@string/btnRegistroGuardar"
+        android:layout_marginTop="@dimen/size5"
+        android:padding="@dimen/size3"
+        android:paddingLeft="@dimen/size3"
+        android:gravity="center_horizontal"
+        android:id="@+id/btnRegistrarse"
+        android:layout_marginLeft="200dp"
+        style="@style/button"/>
+
+
+</LinearLayout>

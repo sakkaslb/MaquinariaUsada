@@ -14,4 +14,6 @@
     <dimen name="size2">16dp</dimen>
     <dimen name="size3">20dp</dimen>
     <dimen name="size4">22dp</dimen>
+    <dimen name="size5">35dp</dimen>
+    <dimen name="size6">55dp</dimen>
 </resources>

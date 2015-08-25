@@ -4,4 +4,6 @@
  <color name="ColorPrimaryDark">#ff686e6c</color>
  <color name="ColorSecondaryDark">#212121</color>
  <color name="ColorSecondaryLight">#ECEFF1</color>
+ <color name="white">#FFFFFF</color>
+
 </resources>
