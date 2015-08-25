@@ -36,6 +36,15 @@
             android:clearTaskOnLaunch="true"
             android:exported="true"
             tools:ignore="ExportedActivity" />
+        <activity
+            android:name=".DetalleMaquinaActivity"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.FloatingWindow.Popup"
+            android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
+            android:clearTaskOnLaunch="true"
+            android:exported="true"
+            tools:ignore="ExportedActivity" />
     </application>
 
 </manifest>

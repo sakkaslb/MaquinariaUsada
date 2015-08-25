@@ -37,7 +37,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     GridView grid;
     ArrayList prgmName;
     Context context;
-    public static String [] prgmNameList={"Let Us C","c++","JAVA","Jsp","Microsoft .Net","Android","PHP","Jquery","JavaScript"};
+    public static String [] prgmNameList={"Maquina 1","Maquina 2","Maquina 3","Maquina 4","Maquina 5","Maquina 6","Maquina 7","Maquina 8","Maquina 9"};
     public static int [] prgmImages={R.drawable.maquina,R.drawable.maquina,R.drawable.maquina,R.drawable.ic_iiasa,R.drawable.ic_iiasa,R.drawable.ic_iiasa,R.drawable.ic_iiasa,R.drawable.ic_iiasa,R.drawable.ic_iiasa};
     protected void onCreate(Bundle savedInstanceState){
 
@@ -98,6 +98,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
 
         //Gridview
         grid=(GridView) findViewById(R.id.gridView1);
+        Intent vintent=new Intent(this,DetalleMaquinaActivity.class);
         grid.setAdapter(new CustomAdapter(this,prgmNameList,prgmImages));
     }
 

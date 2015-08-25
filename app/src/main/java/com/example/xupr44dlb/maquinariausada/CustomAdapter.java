@@ -2,6 +2,8 @@ package com.example.xupr44dlb.maquinariausada;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +15,7 @@ import android.widget.Toast;
 public class CustomAdapter extends BaseAdapter {
 
     String[] result;
-    Context context;
+    Context context, contextodetalle;
     int[] imageId;
     private static LayoutInflater inflater = null;
 
@@ -68,7 +70,10 @@ public class CustomAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                Toast.makeText(context, "You Clicked " + result[position], Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "Hiciste click en " + result[position], Toast.LENGTH_LONG).show();
+                Intent vintent=new Intent(context,DetalleMaquinaActivity.class);
+                context.startActivity(vintent);
+
             }
         });
 

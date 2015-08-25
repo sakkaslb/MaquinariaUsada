@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="wrap_content"  android:background="@color/ColorPrimary" android:elevation="4dp">
+    android:layout_width="match_parent" android:layout_height="wrap_content"  android:background="@color/ColorPrimaryDark" android:elevation="4dp">
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -8,24 +8,20 @@
         android:src="@drawable/ic_back"
         android:background="@android:color/transparent"
         android:paddingRight="@dimen/size3"/>
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_iiasa"
-        android:id="@+id/iiasa_logo"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
         android:text="@string/app_name"
         android:id="@+id/toolbar_title"
-        android:textColor="@color/ColorSecondaryDark"
+        android:textColor="@color/ColorSecondaryLight"
         android:textSize="@dimen/abc_text_size_large_material" />
     <ImageView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_favorite"
-        android:layout_marginStart="250dp"
-        android:id="@+id/imgFavorite" />
+        android:id="@+id/imgFavorite"
+        android:paddingLeft="450dp" />
 
 </android.support.v7.widget.Toolbar>
