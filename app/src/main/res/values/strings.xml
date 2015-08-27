@@ -80,5 +80,8 @@
     <!--Activity Anuncio Small-->
     <string name="lblHoras">Horas: 1000</string>
     <string name="lblGarantia">Garantia: Sin garantia</string>
+
+    <!--Activity Detalle anuncio-->
+    <string name="BtnCotizar">Cotizar</string>
 </resources>
 

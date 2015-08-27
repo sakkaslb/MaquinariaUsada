@@ -7,18 +7,81 @@
     <include
         android:id="@+id/tool_bar_completo"
         layout="@layout/tool_bar_completo" />
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tool_bar_completo">
-
-
+        android:layout_below="@+id/tool_bar_completo"
+        android:id="@+id/layoutimagenes">
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/imgFotoHeader"
             android:src="@drawable/maquina"/>
     </LinearLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/iconListadoImg"
+        android:src="@drawable/ic_imagelist"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/size4"
+        android:layout_below="@+id/layoutimagenes"/>
+
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="@string/BtnCotizar"
+        android:id="@+id/btnCotizar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/size2"
+        android:layout_below="@+id/iconListadoImg"
+        style="@style/button"/>
+
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="@dimen/size2"
+        android:layout_marginTop="@dimen/size2"
+        android:background="@android:color/darker_gray"
+        android:id="@+id/line"
+        android:layout_below="@+id/btnCotizar"/>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView"
+        android:layout_below="@id/line">
+
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Tractor-D6T"
+                android:id="@+id/txtDetalleHeader"
+                android:layout_below="@+id/line"
+                android:layout_marginLeft="@dimen/size2"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="$85,000"
+                android:id="@+id/txtDetallePrecio"
+                android:layout_below="@+id/line"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/size5"/>
+
+        </RelativeLayout>
+    </ScrollView>
+
 
 </RelativeLayout>
