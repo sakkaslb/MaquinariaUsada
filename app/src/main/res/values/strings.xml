@@ -35,6 +35,7 @@
     <string name="lblEquipos">.</string>
     <string name="lblSi">Si</string>
     <string name="lblNo">No</string>
+    <string name="lblNoSerie">No. Serie:</string>
 
     <!--Listados filtros en Main-->
     <string-array name="Familias">
@@ -83,5 +84,10 @@
 
     <!--Activity Detalle anuncio-->
     <string name="BtnCotizar">Cotizar</string>
+    <string name="lblPrecioCertificado">Precio CAT certificado</string>
+    <string name="lblDetalleDescripcion">Descripción:</string>
+    <string name="lblDetalleHoras">Horas:</string>
+    <string name="lblDetalleGarantia">Garantía:</string>
+
 </resources>
 

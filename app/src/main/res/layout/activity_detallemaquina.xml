@@ -1,87 +1,355 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="horizontal"
     tools:context=".DetalleMaquinaActivity">
+
     <include
         android:id="@+id/tool_bar_completo"
         layout="@layout/tool_bar_completo" />
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tool_bar_completo"
-        android:id="@+id/layoutimagenes">
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/imgFotoHeader"
-            android:src="@drawable/maquina"/>
-    </LinearLayout>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/iconListadoImg"
-        android:src="@drawable/ic_imagelist"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="@dimen/size4"
-        android:layout_below="@+id/layoutimagenes"/>
-
-    <Button
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:text="@string/BtnCotizar"
-        android:id="@+id/btnCotizar"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/size2"
-        android:layout_below="@+id/iconListadoImg"
-        style="@style/button"/>
-
-
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="1dp"
-        android:layout_marginBottom="@dimen/size2"
-        android:layout_marginTop="@dimen/size2"
-        android:background="@android:color/darker_gray"
-        android:id="@+id/line"
-        android:layout_below="@+id/btnCotizar"/>
-
-
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/scrollView"
-        android:layout_below="@id/line">
-
+        android:layout_below="@+id/tool_bar_completo">
 
         <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/layoutimagenes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/imgFotoHeader"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/maquina" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/iconListadoImg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/layoutimagenes"
+                android:layout_marginRight="@dimen/size4"
+                android:src="@drawable/ic_imagelist" />
+
+            <Button
+                android:id="@+id/btnCotizar"
+                style="@style/button"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:text="@string/BtnCotizar"
+                android:layout_alignBottom="@+id/iconListadoImg"
+                android:layout_centerHorizontal="true" />
+
+
+            <View
+                android:id="@+id/line"
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/btnCotizar"
+                android:layout_marginBottom="@dimen/size2"
+                android:layout_marginTop="@dimen/size2"
+                android:background="@android:color/darker_gray" />
+
+            <TextView
+                android:id="@+id/txtDetalleHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/line"
+                android:layout_marginLeft="@dimen/size2"
+                android:text="Tractor-D6T"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="50dp" />
+
+            <TextView
+                android:id="@+id/txtDetallePrecio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/line"
+                android:layout_marginRight="@dimen/size5"
+                android:text="$85,000"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/ColorPrimaryDark"
+                android:textColorHighlight="@color/ColorPrimary"
+                android:textSize="50dp" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Tractor-D6T"
-                android:id="@+id/txtDetalleHeader"
-                android:layout_below="@+id/line"
-                android:layout_marginLeft="@dimen/size2"/>
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/lblFamilia"
+                android:id="@+id/lblDetalleFamilia"
+                android:layout_below="@+id/txtDetalleHeader"
+                android:layout_marginTop="@dimen/size3"
+                android:layout_toRightOf="@+id/imageView"
+                android:layout_toEndOf="@+id/imageView" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView"
+                android:src="@drawable/ic_bullet"
+                android:layout_marginTop="@dimen/size3"
+                android:layout_marginLeft="41dp"
+                android:layout_marginStart="41dp"
+                android:layout_below="@+id/lblDetalleFamilia"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="$85,000"
-                android:id="@+id/txtDetallePrecio"
-                android:layout_below="@+id/line"
+                android:text="Tractor"
+                android:id="@+id/txtDetalleFamilia"
+                android:layout_alignTop="@+id/imageView"
+                android:layout_alignLeft="@+id/lblDetalleFamilia"
+                android:layout_alignStart="@+id/lblDetalleFamilia" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/lblUbicacion"
+                android:id="@+id/lblDetalleLocalizacion"
+                android:layout_below="@+id/txtDetalleFamilia"
+                android:layout_marginTop="@dimen/size3"
+                android:layout_toRightOf="@+id/imageView2"
+                android:layout_toEndOf="@+id/imageView2" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView2"
+                android:src="@drawable/ic_bullet"
+                android:layout_marginTop="@dimen/size3"
+                android:layout_marginLeft="41dp"
+                android:layout_marginStart="41dp"
+                android:layout_below="@+id/lblDetalleLocalizacion"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Guayaquil"
+                android:id="@+id/txtDetalleLocalizacion"
+                android:layout_alignTop="@+id/imageView2"
+                android:layout_alignLeft="@+id/lblDetalleLocalizacion"
+                android:layout_alignStart="@+id/lblDetalleLocalizacion" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/lblModelo"
+                android:id="@+id/lblDetalleModelo"
+                android:layout_alignTop="@+id/lblDetalleFamilia"
+                android:layout_toRightOf="@+id/txtDetalleHeader"
+                android:layout_toEndOf="@+id/txtDetalleHeader"
+                android:layout_marginLeft="66dp"
+                android:layout_marginStart="66dp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView3"
+                android:src="@drawable/ic_bullet"
+                android:layout_marginTop="@dimen/size3"
+                android:layout_below="@+id/lblDetalleModelo"
+                android:layout_alignLeft="@+id/lblDetalleModelo"
+                android:layout_alignStart="@+id/lblDetalleModelo" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="D6"
+                android:id="@+id/txtDetalleModelo"
+                android:layout_marginTop="@dimen/size3"
+                android:layout_below="@+id/lblDetalleModelo"
+                android:layout_toRightOf="@+id/imageView3"
+                android:layout_toEndOf="@+id/imageView3" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/lblNoSerie"
+                android:id="@+id/lblDetalleNoSerie"
+                android:layout_alignTop="@+id/lblDetalleLocalizacion"
+                android:layout_alignLeft="@+id/imageView3"
+                android:layout_alignStart="@+id/imageView3" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView4"
+                android:src="@drawable/ic_bullet"
+                android:layout_alignTop="@+id/txtDetalleNoSerie"
+                android:layout_alignLeft="@+id/lblDetalleNoSerie"
+                android:layout_alignStart="@+id/lblDetalleNoSerie" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="ABC23456"
+                android:id="@+id/txtDetalleNoSerie"
+                android:layout_alignTop="@+id/txtDetalleLocalizacion"
+                android:layout_alignLeft="@+id/txtDetalleModelo"
+                android:layout_alignStart="@+id/txtDetalleModelo" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/lblPrecioCertificado"
+                android:id="@+id/textView2"
+                android:layout_below="@+id/txtDetallePrecio"
+                android:layout_alignRight="@+id/txtDetallePrecio"
+                android:layout_alignEnd="@+id/txtDetallePrecio" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/lblDetalleDescripcion"
+                android:id="@+id/lblDetalleDescripcion"
+                android:layout_marginLeft="72dp"
+                android:layout_marginStart="72dp"
+                android:layout_marginTop="@dimen/size3"
+                android:layout_below="@+id/txtDetalleLocalizacion"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/lblDetalleHoras"
+                android:id="@+id/textView3"
+                android:layout_marginRight="47dp"
+                android:layout_marginEnd="47dp"
+                android:layout_alignTop="@+id/lblDetalleModelo"
+                android:layout_alignRight="@+id/btnCotizar"
+                android:layout_alignEnd="@+id/btnCotizar" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/lblAnio"
+                android:id="@+id/textView4"
+                android:layout_alignTop="@+id/lblDetalleNoSerie"
+                android:layout_alignLeft="@+id/textView3"
+                android:layout_alignStart="@+id/textView3" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/lblDetalleGarantia"
+                android:id="@+id/textView5"
+                android:layout_below="@+id/textView2"
+                android:layout_toLeftOf="@+id/textView2"
+                android:layout_toStartOf="@+id/textView2" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView5"
+                android:src="@drawable/ic_bullet"
+                android:layout_above="@+id/lblDetalleLocalizacion"
+                android:layout_alignLeft="@+id/textView3"
+                android:layout_alignStart="@+id/textView3" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView6"
+                android:src="@drawable/ic_bullet"
+                android:layout_alignTop="@+id/txtDetalleNoSerie"
+                android:layout_alignLeft="@+id/textView4"
+                android:layout_alignStart="@+id/textView4" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView7"
+                android:src="@drawable/ic_bullet"
+                android:layout_alignTop="@+id/imageView5"
+                android:layout_alignLeft="@+id/textView5"
+                android:layout_alignStart="@+id/textView5" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView8"
+                android:src="@drawable/ic_bullet"
+                android:layout_alignParentBottom="true"
+                android:layout_below="@+id/lblDetalleDescripcion"
+                android:layout_alignLeft="@+id/imageView2"
+                android:layout_alignStart="@+id/imageView2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Tractor de orugas marca Caterpillar D5G LGP Zapaton, Año 2004. Tren de rodaje en excelente estado. Operativo. A toda prueba."
+                android:id="@+id/txtDetalleDescripcion"
+                android:layout_below="@+id/lblDetalleDescripcion"
+                android:layout_marginTop="@dimen/size3"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="@dimen/size5"/>
+                android:layout_toEndOf="@+id/imageView8"
+                android:layout_alignLeft="@id/lblDetalleDescripcion" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="6500 Horas"
+                android:id="@+id/txtDetalleHoras"
+                android:layout_alignTop="@+id/imageView5"
+                android:layout_toRightOf="@+id/textView4"
+                android:layout_toEndOf="@+id/textView4" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="2004"
+                android:id="@+id/txtDetalleAnio"
+                android:layout_alignTop="@+id/imageView6"
+                android:layout_alignLeft="@+id/txtDetalleHoras"
+                android:layout_alignStart="@+id/txtDetalleHoras" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="6 meses"
+                android:id="@+id/txtDetalleGarantia"
+                android:layout_alignTop="@+id/imageView7"
+                android:layout_toRightOf="@+id/imageView7"
+                android:layout_toEndOf="@+id/imageView7" />
 
         </RelativeLayout>
     </ScrollView>
+
+
 
 
 </RelativeLayout>

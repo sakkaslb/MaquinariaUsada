@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Maquina {
     int id;
-    String descripcion, familia, estado, status, localizacion, modelo, serie, horas, garantia, anio;
+    String descripcion, familia, localizacion, modelo, serie, horas, garantia, anio;
     float precioSin, precioCertificado;
     Date fecha_modificacion;
 
@@ -12,8 +12,6 @@ public class Maquina {
         this.id = id;
         this.descripcion = descripcion;
         this.familia = familia;
-        this.estado = estado;
-        this.status = status;
         this.localizacion = localizacion;
         this.modelo = modelo;
         this.serie = serie;
@@ -47,22 +45,6 @@ public class Maquina {
 
     public void setFamilia(String familia) {
         this.familia = familia;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public String getLocalizacion() {

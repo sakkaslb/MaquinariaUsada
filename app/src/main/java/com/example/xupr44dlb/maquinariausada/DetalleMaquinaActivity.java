@@ -23,7 +23,7 @@ public class DetalleMaquinaActivity extends Activity {
         setContentView(R.layout.activity_detallemaquina);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND,
                 WindowManager.LayoutParams.FLAG_DIM_BEHIND);
-        Log.i("Ojo", "Si ejecute");
+
         // Params for the window.
         // You can easily set the alpha and the dim behind the window from here
         WindowManager.LayoutParams params = getWindow().getAttributes();
@@ -42,7 +42,7 @@ public class DetalleMaquinaActivity extends Activity {
         if (height > width) {
             getWindow().setLayout((int) (width * .9), (int) (height * .7));
         } else {
-            getWindow().setLayout((int) (width * .7), (int) (height * .8));
+            getWindow().setLayout((int) (width * .9), (int) (height * .9));
         }
     }
 }
