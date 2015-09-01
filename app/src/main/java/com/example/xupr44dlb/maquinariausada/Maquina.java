@@ -4,11 +4,25 @@ import java.util.Date;
 
 public class Maquina {
     int id;
-    String descripcion, familia, localizacion, modelo, serie, horas, garantia, anio;
-    float precioSin, precioCertificado;
-    Date fecha_modificacion;
+    String descripcion;
+    String familia;
+    String localizacion;
+    String modelo;
+    String serie;
+    Integer horas;
+    String garantia;
+    Integer anio;
+    String link;
+    float precioSin;
+    float precioCertificado;
+    float preciocredito;
+    String fecha_modificacion;
 
-    public Maquina(Integer id, String descripcion, String familia, String estado, String status, String localizacion, String modelo, String serie, String horas, String garantia, String anio, float precioSin, float precioCertificado, Date fecha_modificacion) {
+    public Maquina()
+    {
+
+    }
+    public Maquina(Integer id, String descripcion, String familia, String estado, String status, String localizacion, String modelo, String serie, Integer horas, String garantia, Integer anio, float precioSin, float precioCertificado, String fecha_modificacion) {
         this.id = id;
         this.descripcion = descripcion;
         this.familia = familia;
@@ -21,6 +35,19 @@ public class Maquina {
         this.precioSin = precioSin;
         this.precioCertificado = precioCertificado;
         this.fecha_modificacion = fecha_modificacion;
+    }
+    public String getLink() {
+        return link;
+    }
+    public void setLink(String link) {
+        this.link = link;
+    }
+    public float getPreciocredito() {
+        return preciocredito;
+    }
+
+    public void setPreciocredito(float preciocredito) {
+        this.preciocredito = preciocredito;
     }
 
     public int getId() {
@@ -71,11 +98,11 @@ public class Maquina {
         this.serie = serie;
     }
 
-    public String getHoras() {
+    public Integer getHoras() {
         return horas;
     }
 
-    public void setHoras(String horas) {
+    public void setHoras(Integer horas) {
         this.horas = horas;
     }
 
@@ -87,11 +114,11 @@ public class Maquina {
         this.garantia = garantia;
     }
 
-    public String getAnio() {
+    public Integer getAnio() {
         return anio;
     }
 
-    public void setAnio(String anio) {
+    public void setAnio(Integer anio) {
         this.anio = anio;
     }
 
@@ -111,11 +138,11 @@ public class Maquina {
         this.precioCertificado = precioCertificado;
     }
 
-    public Date getFecha_modificacion() {
+    public String getFecha_modificacion() {
         return fecha_modificacion;
     }
 
-    public void setFecha_modificacion(Date fecha_modificacion) {
+    public void setFecha_modificacion(String fecha_modificacion) {
         this.fecha_modificacion = fecha_modificacion;
     }
 

@@ -1,9 +1,12 @@
 package com.example.xupr44dlb.maquinariausada;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Window;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -23,10 +26,28 @@ public class SplashActivity extends Activity {
       TimerTask tarea=new TimerTask() {
             @Override
             public void run() {
-                Intent mainIntent = new Intent().setClass(
-                        SplashActivity.this, MainActivity.class);
-                startActivity(mainIntent);
-                finish();
+                SharedPreferences prefs=getSharedPreferences("loginUsuarios", Context.MODE_PRIVATE);
+                Boolean res=prefs.getBoolean("session",false);
+                if (res)
+                {
+                    Log.i("SPLASH VERDADERO",res.toString());
+                    Intent mainIntent = new Intent().setClass(
+                            SplashActivity.this, MenuActivity.class);
+                    Bundle b=new Bundle();
+                    b.putBoolean("descargaInfo",true);
+                    mainIntent.putExtras(b);
+                    startActivity(mainIntent);
+                    finish();
+                }
+                else
+                {
+                    Log.i("SPLASH FALSO",res.toString());
+                    Intent mainIntent = new Intent().setClass(
+                            SplashActivity.this, MainActivity.class);
+                    startActivity(mainIntent);
+                    finish();
+                }
+
 
             }
         };

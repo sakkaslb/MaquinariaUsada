@@ -4,6 +4,7 @@
     <string name="app_name">Maquinaria Usada</string>
     <string name="hello_world">Hello world! Stefanie</string>
     <string name="action_settings">Configuración</string>
+    <string name="action_logout">Cerrar sesión</string>
 
     <!--Login-->
     <string name="login">Iniciar Sesión</string>

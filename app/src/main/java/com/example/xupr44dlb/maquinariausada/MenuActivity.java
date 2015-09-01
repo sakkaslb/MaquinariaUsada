@@ -1,7 +1,12 @@
 package com.example.xupr44dlb.maquinariausada;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -20,25 +25,41 @@ import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.concurrent.ExecutionException;
 
 public class MenuActivity extends AppCompatActivity implements View.OnClickListener, AdapterViewCompat.OnItemSelectedListener{
     private Toolbar toolbar;
     Button btnFiltrar;
     ToggleButton btnVerFiltros;
-    EditText txtVerPromos, txtModelo;
     Spinner cmbFamilias, cmbOrden, cmbPrecio, cmbRegion, cmbUbicacion;
-    String [] datosFamilias, datosOrden, datosPrecio, datosRegion, datosUbicacion;
     Intent vintent;
     LinearLayout filtrosLayout;
     RelativeLayout filtrospadreLayout;
     GridView grid;
-    ArrayList prgmName;
-    Context context;
-    public static String [] prgmNameList={"Maquina 1","Maquina 2","Maquina 3","Maquina 4","Maquina 5","Maquina 6","Maquina 7","Maquina 8","Maquina 9"};
-    public static int [] prgmImages={R.drawable.maquina,R.drawable.maquina,R.drawable.maquina,R.drawable.ic_iiasa,R.drawable.ic_iiasa,R.drawable.ic_iiasa,R.drawable.ic_iiasa,R.drawable.ic_iiasa,R.drawable.ic_iiasa};
+
+    public MenuActivity() {
+    }
+
+    public ArrayList<Maquina> getListadoMaquinas() {
+        return listadoMaquinas;
+    }
+
+    public void setListadoMaquinas(ArrayList<Maquina> listadoMaquinas) {
+        this.listadoMaquinas = listadoMaquinas;
+    }
+
+    public  ArrayList<Maquina> listadoMaquinas=new ArrayList<Maquina>();
+    // EditText txtVerPromos, txtModelo;
+    // String [] datosFamilias, datosOrden, datosPrecio, datosRegion, datosUbicacion;
+   // ArrayList prgmName;
+   // Context context;
+  //  public static String [] prgmNameList={"Maquina 1","Maquina 2","Maquina 3","Maquina 4","Maquina 5","Maquina 6","Maquina 7","Maquina 8","Maquina 9"};
+  //  public static int [] prgmImages={R.drawable.maquina,R.drawable.maquina,R.drawable.maquina,R.drawable.ic_iiasa,R.drawable.ic_iiasa,R.drawable.ic_iiasa,R.drawable.ic_iiasa,R.drawable.ic_iiasa,R.drawable.ic_iiasa};
     protected void onCreate(Bundle savedInstanceState){
 
         super.onCreate(savedInstanceState);
@@ -46,6 +67,26 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
 
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
+
+        //DESCARGA DE INFORMACION
+
+
+        Boolean downloadInfo=true;
+        Bundle bundle =this.getIntent().getExtras();
+        downloadInfo=bundle.getBoolean("descargaInfo");
+        if (downloadInfo)
+        {
+            Log.i("MENU","ENTRE A DESCARGAR INFORMACION");
+            new DownloadInfo(this,this).execute();
+            //GUARDAR ULTIMA FECHA DE DESCARGA
+            SharedPreferences prefs=getSharedPreferences("loginUsuarios", Context.MODE_PRIVATE);
+            Calendar c = Calendar.getInstance();
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString("ultimoacceso", c.getTime().toString());
+            editor.commit();
+
+        }
+
 
         //BOTONES
         btnVerFiltros=(ToggleButton) findViewById(R.id.btnVerFiltros);
@@ -98,8 +139,16 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
 
         //Gridview
         grid=(GridView) findViewById(R.id.gridView1);
-        Intent vintent=new Intent(this,DetalleMaquinaActivity.class);
-        grid.setAdapter(new CustomAdapter(this,prgmNameList,prgmImages));
+        try {
+           listadoMaquinas=new ObtenerListado(this,this).execute().get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        Log.i("OBSERVACION","SI EJECUTE OBTENER LISTADO");
+        grid.setAdapter(new CustomAdapter(this,listadoMaquinas));
+       // grid.setAdapter(new CustomAdapter(this,prgmNameList,prgmImages));
     }
 
     @Override
@@ -119,6 +168,15 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            SharedPreferences prefs=getSharedPreferences("loginUsuarios",0);
+            prefs.edit().putBoolean("session",false).commit();
+            prefs.edit().remove("usuario").commit();
+            prefs.edit().remove("vendedor").commit();
+            prefs.edit().remove("salesrepid").commit();
+            prefs.edit().remove("salesrepno").commit();
+            Toast.makeText(getApplicationContext(), "Cerrando sesión", Toast.LENGTH_SHORT).show();
+            Intent i=new Intent(this, MainActivity.class);
+            startActivity(i);
             return true;
         }
 
@@ -168,3 +226,59 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
 
 }
 
+class ObtenerListado extends AsyncTask<Void,Integer,ArrayList<Maquina>>{
+
+   Context context;
+   Activity activity;
+
+    public ObtenerListado(Context ctx, Activity activity ) {
+        this.context=ctx;
+        this.activity=activity;
+    }
+
+    @Override
+    protected ArrayList<Maquina> doInBackground(Void... params) {
+        Log.i("CONSULTA LISTADO","SI ENTRE");
+        ArrayList<Maquina> resultado=new ArrayList<Maquina>();
+        USQLiteHelper usuario=new USQLiteHelper(context,"DBUsada",null,1);
+        SQLiteDatabase db=usuario.getWritableDatabase();
+        Cursor c=db.rawQuery("SELECT familia, localizacion, modelo, serie, horas, garantia, precio_sin_acondicionar, precio_cat_usado_certificado, " +
+                "precio_credito, descripcion, link,id from Maquinaria",null);
+        if (c.moveToFirst()){
+            do{
+                Log.i("CONSULTA LISTADO","ENTRE POR EL ID"+c.getInt(11));
+                Maquina maquinaria=new Maquina();
+                maquinaria.setFamilia(c.getString(0));
+                maquinaria.setLocalizacion(c.getString(1));
+                maquinaria.setModelo(c.getString(2));
+                maquinaria.setSerie(c.getString(3));
+                maquinaria.setHoras(c.getInt(4));
+                maquinaria.setGarantia(c.getString(5));
+                maquinaria.setPrecioSin(c.getFloat(6));
+                maquinaria.setPrecioCertificado(c.getFloat(7));
+                maquinaria.setPreciocredito(c.getFloat(8));
+                maquinaria.setDescripcion(c.getString(9));
+                maquinaria.setLink(c.getString(10));
+                maquinaria.setId(c.getInt(11));
+                resultado.add(maquinaria);
+
+            }
+            while (c.moveToNext());
+            c.close();
+        }
+        Log.i("Resultado","AUXILIO"+resultado.size());
+        return resultado;
+
+    }
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+    }
+
+    @Override
+    protected void onPostExecute(ArrayList<Maquina> maquinas) {
+        super.onPostExecute(maquinas);
+
+    }
+}

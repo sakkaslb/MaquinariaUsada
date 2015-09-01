@@ -50,6 +50,7 @@
             android:layout_gravity="center"
             android:text="$103,000"
             android:textSize="20dp"
+            android:id="@+id/lblAnuncioPrecio"
             android:textStyle="italic"
             android:gravity="center_horizontal"
             style="@style/textlight"/>
