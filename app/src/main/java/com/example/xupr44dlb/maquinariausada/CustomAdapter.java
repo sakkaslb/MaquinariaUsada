@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 public class CustomAdapter extends BaseAdapter {
@@ -75,17 +77,20 @@ public class CustomAdapter extends BaseAdapter {
 
         rowView = inflater.inflate(R.layout.activity_anuncio, null);
         holder.tv=(TextView) rowView.findViewById(R.id.lblAnuncioHeader);
-        holder.precio=(TextView) rowView.findViewById(R.id.lblAnuncioHoras);
+        holder.precio=(TextView) rowView.findViewById(R.id.lblAnuncioPrecio);
         holder.horas=(TextView) rowView.findViewById(R.id.lblAnuncioHoras);
         holder.garantia=(TextView) rowView.findViewById(R.id.lblAnuncioGarantia);
         holder.img=(ImageView) rowView.findViewById(R.id.imgAnuncioFoto);
 
         // holder.tv.setText(result[position]);
         // holder.img.setImageResource(imageId[position]);
-        holder.tv.setText((CharSequence) maquinas.get(position).getModelo());
-       // holder.precio.setText((int) maquinas.get(position).getPrecioCertificado());
-   //     holder.horas.setText(maquinas.get(position).getHoras());
-        holder.garantia.setText(maquinas.get(position).getGarantia());
+        holder.tv.setText(maquinas.get(position).getModelo()+" ");
+        NumberFormat fmt = NumberFormat.getCurrencyInstance();
+        final String precio=fmt.format(maquinas.get(position).getPrecioCertificado()).toString();
+        holder.precio.setText(precio);
+        String hora=String.valueOf(maquinas.get(position).getHoras());
+        holder.horas.setText("Horas: "+hora);
+        holder.garantia.setText("Garantia: "+maquinas.get(position).getGarantia());
         new ImageLoadTask(maquinas.get(position).getLink(), holder.img).execute();
 
         rowView.setOnClickListener(new View.OnClickListener() {
@@ -95,6 +100,19 @@ public class CustomAdapter extends BaseAdapter {
                 // TODO Auto-generated method stub
                 Toast.makeText(context, "Hiciste click en " + maquinas.get(position).getModelo(), Toast.LENGTH_LONG).show();
                 Intent vintent=new Intent(context,DetalleMaquinaActivity.class);
+                Bundle bundle=new Bundle();
+                bundle.putInt("id",maquinas.get(position).getId());
+                bundle.putString("familia", maquinas.get(position).getFamilia());
+                bundle.putString("modelo", maquinas.get(position).getModelo());
+                bundle.putString("ubicacion",maquinas.get(position).getLocalizacion());
+                bundle.putString("serie",maquinas.get(position).getSerie());
+                bundle.putString("descripcion", maquinas.get(position).getDescripcion());
+                bundle.putString("precio",precio);
+                bundle.putString("horas",String.valueOf(maquinas.get(position).getHoras()));
+                bundle.putString("garantia",maquinas.get(position).getGarantia());
+                bundle.putString("anio",String.valueOf(maquinas.get(position).getAnio()));
+                bundle.putString("link", maquinas.get(position).getLink());
+                vintent.putExtras(bundle);
                 context.startActivity(vintent);
 
             }

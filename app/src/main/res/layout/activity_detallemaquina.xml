@@ -233,7 +233,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/lblPrecioCertificado"
-                android:id="@+id/textView2"
+                android:id="@+id/lblDetallePrecioLeyenda"
                 android:layout_below="@+id/txtDetallePrecio"
                 android:layout_alignRight="@+id/txtDetallePrecio"
                 android:layout_alignEnd="@+id/txtDetallePrecio" />
@@ -268,7 +268,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/lblAnio"
-                android:id="@+id/textView4"
+                android:id="@+id/lblDetalleAnio"
                 android:layout_alignTop="@+id/lblDetalleNoSerie"
                 android:layout_alignLeft="@+id/textView3"
                 android:layout_alignStart="@+id/textView3" />
@@ -279,9 +279,9 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/lblDetalleGarantia"
                 android:id="@+id/textView5"
-                android:layout_below="@+id/textView2"
-                android:layout_toLeftOf="@+id/textView2"
-                android:layout_toStartOf="@+id/textView2" />
+                android:layout_below="@+id/lblDetallePrecioLeyenda"
+                android:layout_toLeftOf="@+id/lblDetallePrecioLeyenda"
+                android:layout_toStartOf="@+id/lblDetallePrecioLeyenda" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -298,8 +298,8 @@
                 android:id="@+id/imageView6"
                 android:src="@drawable/ic_bullet"
                 android:layout_alignTop="@+id/txtDetalleNoSerie"
-                android:layout_alignLeft="@+id/textView4"
-                android:layout_alignStart="@+id/textView4" />
+                android:layout_alignLeft="@+id/lblDetalleAnio"
+                android:layout_alignStart="@+id/lblDetalleAnio" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -339,8 +339,8 @@
                 android:text="6500 Horas"
                 android:id="@+id/txtDetalleHoras"
                 android:layout_alignTop="@+id/imageView5"
-                android:layout_toRightOf="@+id/textView4"
-                android:layout_toEndOf="@+id/textView4" />
+                android:layout_toRightOf="@+id/lblDetalleAnio"
+                android:layout_toEndOf="@+id/lblDetalleAnio" />
 
             <TextView
                 android:layout_width="wrap_content"

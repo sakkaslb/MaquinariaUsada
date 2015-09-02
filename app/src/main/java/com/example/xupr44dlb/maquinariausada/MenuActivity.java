@@ -54,12 +54,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public  ArrayList<Maquina> listadoMaquinas=new ArrayList<Maquina>();
-    // EditText txtVerPromos, txtModelo;
-    // String [] datosFamilias, datosOrden, datosPrecio, datosRegion, datosUbicacion;
-   // ArrayList prgmName;
-   // Context context;
-  //  public static String [] prgmNameList={"Maquina 1","Maquina 2","Maquina 3","Maquina 4","Maquina 5","Maquina 6","Maquina 7","Maquina 8","Maquina 9"};
-  //  public static int [] prgmImages={R.drawable.maquina,R.drawable.maquina,R.drawable.maquina,R.drawable.ic_iiasa,R.drawable.ic_iiasa,R.drawable.ic_iiasa,R.drawable.ic_iiasa,R.drawable.ic_iiasa,R.drawable.ic_iiasa};
+
     protected void onCreate(Bundle savedInstanceState){
 
         super.onCreate(savedInstanceState);
@@ -123,12 +118,6 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         adaptador=ArrayAdapter.createFromResource(this, R.array.Precios, android.R.layout.simple_spinner_item);
         adaptador.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         cmbPrecio.setAdapter(adaptador);
-
-        //Cargando combo de ubicacion
-        cmbUbicacion=(Spinner) findViewById(R.id.cmbUbicacion);
-        adaptador=ArrayAdapter.createFromResource(this, R.array.Ubicacion, android.R.layout.simple_spinner_item);
-        adaptador.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        cmbUbicacion.setAdapter(adaptador);
 
         //Cargando combo de region
 
@@ -267,6 +256,7 @@ class ObtenerListado extends AsyncTask<Void,Integer,ArrayList<Maquina>>{
             c.close();
         }
         Log.i("Resultado","AUXILIO"+resultado.size());
+        db.close();
         return resultado;
 
     }

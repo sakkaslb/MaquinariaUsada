@@ -436,11 +436,15 @@ class ValidateData extends AsyncTask<Void, Integer, Boolean>
             }catch (Exception e){
                 Log.i("Exception",e.toString());
             }
+            finally {
+                c.close();
+
+            }
 
 
             result=true;
         }
-         c.close();
+        db.close();
         return result;
 
     }

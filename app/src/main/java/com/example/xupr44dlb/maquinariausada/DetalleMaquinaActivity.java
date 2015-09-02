@@ -11,18 +11,47 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.Gallery;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 public class DetalleMaquinaActivity extends Activity {
     static TextView mDotsText[];
     private int mDotsCount;
     private LinearLayout mDotsLayout;
+    TextView txtPrecio, txtFamilia, txtModelo, txtUbicacion, txtDescripcion, txtSerie, txtAnio, txtHoras, txtGarantia,txtDetalleHeader;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+
         setUpWindow();
+
+        Bundle bundle =this.getIntent().getExtras();
+        txtModelo=(TextView) findViewById(R.id.txtDetalleModelo);
+        txtFamilia=(TextView) findViewById(R.id.txtDetalleFamilia);
+        txtUbicacion=(TextView) findViewById(R.id.txtDetalleLocalizacion);
+        txtDescripcion=(TextView)findViewById(R.id.txtDetalleDescripcion);
+        txtSerie=(TextView) findViewById(R.id.txtDetalleNoSerie);
+        txtAnio=(TextView) findViewById(R.id.txtDetalleAnio);
+        txtHoras=(TextView)findViewById(R.id.txtDetalleHoras);
+        txtGarantia=(TextView) findViewById(R.id.txtDetalleGarantia);
+        txtPrecio=(TextView)findViewById(R.id.txtDetallePrecio);
+        txtDetalleHeader=(TextView)findViewById(R.id.txtDetalleHeader);
+
+        txtModelo.setText(bundle.getString("modelo"));
+        txtFamilia.setText(bundle.getString("familia"));
+        txtUbicacion.setText(bundle.getString("ubicacion"));
+        txtDescripcion.setText(bundle.getString("descripcion"));
+        txtSerie.setText(bundle.getString("serie"));
+        txtAnio.setText(bundle.getString("anio"));
+        txtHoras.setText(bundle.getString("horas"));
+        txtGarantia.setText(bundle.getString("garantia"));
+        txtPrecio.setText(bundle.getString("precio"));
+        txtDetalleHeader.setText(bundle.getString("familia")+" - "+bundle.getString("modelo"));
+      
         Gallery gallery = (Gallery)findViewById(R.id.gallery);
         gallery.setAdapter(new ImageAdapter(this));
         mDotsLayout = (LinearLayout)findViewById(R.id.image_count);
@@ -62,6 +91,7 @@ public class DetalleMaquinaActivity extends Activity {
 
             }
         });
+
     }
     public void setUpWindow() {
 

@@ -21,7 +21,6 @@
         <item>Más recientes</item>
         <item>Precio: Menor a Mayor</item>
         <item>Precio: Mayor a Menor</item>
-        <item>% de Descuento</item>
         <item>A-Z</item>
     </string-array>
     <string name="lblFamilia">Familia:</string>
@@ -59,20 +58,16 @@
     </string-array>
 
     <string-array name="Precios">
-        <item>Menor a 25.000</item>
-        <item>25.000 a 35.000</item>
+        <item>Menor a 35.000</item>
         <item>35.000 a 50.000</item>
-        <item>50.000 en adelante</item>
+        <item>50.000 a 100.000</item>
+        <item>100.000 en adelante</item>
     </string-array>
     <string-array name="Regiones">
         <item>Costa/Austro</item>
         <item>Sierra/Oriente</item>
     </string-array>
-    <string-array name="Ubicacion">
-        <item>Patio IIASA Guayaquil</item>
-        <item>Patio IIASA Quito</item>
-        <item>Patio Cliente</item>
-    </string-array>
+
 
     <!--Activity registro-->
     <string name="lblRegistro_titulo">Registrate con tu Email</string>
