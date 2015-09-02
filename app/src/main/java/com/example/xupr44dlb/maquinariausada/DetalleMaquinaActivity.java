@@ -4,21 +4,25 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Display;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.Gallery;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import org.w3c.dom.Text;
+import java.util.ArrayList;
 
-public class DetalleMaquinaActivity extends Activity {
+
+public class DetalleMaquinaActivity extends Activity implements View.OnClickListener{
     static TextView mDotsText[];
     private int mDotsCount;
     private LinearLayout mDotsLayout;
@@ -26,9 +30,7 @@ public class DetalleMaquinaActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-
         setUpWindow();
-
         Bundle bundle =this.getIntent().getExtras();
         txtModelo=(TextView) findViewById(R.id.txtDetalleModelo);
         txtFamilia=(TextView) findViewById(R.id.txtDetalleFamilia);
@@ -51,7 +53,8 @@ public class DetalleMaquinaActivity extends Activity {
         txtGarantia.setText(bundle.getString("garantia"));
         txtPrecio.setText(bundle.getString("precio"));
         txtDetalleHeader.setText(bundle.getString("familia")+" - "+bundle.getString("modelo"));
-      
+
+
         Gallery gallery = (Gallery)findViewById(R.id.gallery);
         gallery.setAdapter(new ImageAdapter(this));
         mDotsLayout = (LinearLayout)findViewById(R.id.image_count);
@@ -96,8 +99,10 @@ public class DetalleMaquinaActivity extends Activity {
     public void setUpWindow() {
 
         // Creates the layout for the window and the look of it
+
         requestWindowFeature(Window.FEATURE_ACTION_BAR);
         setContentView(R.layout.activity_detallemaquina);
+
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND,
                 WindowManager.LayoutParams.FLAG_DIM_BEHIND);
 
@@ -121,5 +126,31 @@ public class DetalleMaquinaActivity extends Activity {
         } else {
             getWindow().setLayout((int) (width * .9), (int) (height * .9));
         }
+
+
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 }
+ class DownloadImages extends AsyncTask<Void, Integer, ArrayList<Imagen>>
+ {
+
+     @Override
+     protected ArrayList<Imagen> doInBackground(Void... params) {
+         return null;
+     }
+
+     @Override
+     protected void onPreExecute() {
+         super.onPreExecute();
+     }
+
+     @Override
+     protected void onPostExecute(ArrayList<Imagen> imagens) {
+         super.onPostExecute(imagens);
+     }
+ }
+

@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/app_name"
     android:layout_width="match_parent" android:layout_height="wrap_content"  android:background="@color/ColorPrimaryDark" android:elevation="4dp">
-    <ImageButton
+    <!--<ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/btnBack"
         android:src="@drawable/ic_back"
         android:background="@android:color/transparent"
-        android:paddingRight="@dimen/size3"/>
+        android:paddingRight="@dimen/size3"/>-->
 
     <TextView
         android:layout_width="wrap_content"
@@ -17,11 +18,11 @@
         android:id="@+id/toolbar_title"
         android:textColor="@color/ColorSecondaryLight"
         android:textSize="@dimen/abc_text_size_large_material" />
-    <ImageView
+   <!-- <ImageView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_favorite"
         android:id="@+id/imgFavorite"
-        android:paddingLeft="450dp" />
+        android:paddingLeft="450dp" />-->
 
 </android.support.v7.widget.Toolbar>

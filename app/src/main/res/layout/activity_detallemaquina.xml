@@ -8,7 +8,8 @@
 
     <include
         android:id="@+id/tool_bar_completo"
-        layout="@layout/tool_bar_completo" />
+        layout="@layout/tool_bar_completo"
+        />
 
     <ScrollView
         android:id="@+id/scrollView"
@@ -26,12 +27,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 ;
-                <!--<ImageView
-                    android:id="@+id/imgFotoHeader"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/maquina" />-->
-                <!-- This is the Gallery -->
+               <!-- This is the Gallery -->
+
                 <Gallery xmlns:android="http://schemas.android.com/apk/res/android"
                     android:id="@+id/gallery"
                     android:layout_width="fill_parent"
@@ -173,10 +170,10 @@
                 android:text="@string/lblModelo"
                 android:id="@+id/lblDetalleModelo"
                 android:layout_alignTop="@+id/lblDetalleFamilia"
-                android:layout_toRightOf="@+id/txtDetalleHeader"
-                android:layout_toEndOf="@+id/txtDetalleHeader"
-                android:layout_marginLeft="66dp"
-                android:layout_marginStart="66dp" />
+                android:layout_toRightOf="@+id/lblDetalleFamilia"
+                android:layout_toEndOf="@+id/lblDetalleFamilia"
+                android:layout_marginLeft="280dp"
+                 />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -197,7 +194,7 @@
                 android:layout_marginTop="@dimen/size3"
                 android:layout_below="@+id/lblDetalleModelo"
                 android:layout_toRightOf="@+id/imageView3"
-                android:layout_toEndOf="@+id/imageView3" />
+                 />
 
             <TextView
                 android:layout_width="wrap_content"

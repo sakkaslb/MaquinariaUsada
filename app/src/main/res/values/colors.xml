@@ -5,5 +5,6 @@
  <color name="ColorSecondaryDark">#212121</color>
  <color name="ColorSecondaryLight">#ECEFF1</color>
  <color name="white">#FFFFFF</color>
+ <color name="color_accent">#FFAB00</color>
 
 </resources>
