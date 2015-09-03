@@ -238,7 +238,8 @@ class DownloadInfo extends AsyncTask<Void, Integer, Boolean>
     Context context;
     Activity activity;
     ProgressDialog dialog;
-    String URL="https://dl.dropboxusercontent.com/u/51632131/prueba.html";
+   // String URL="https://dl.dropboxusercontent.com/u/51632131/prueba.html";
+
     public DownloadInfo(Context context, Activity actividad) {
         this.context=context;
         this.activity=actividad;
@@ -258,8 +259,9 @@ class DownloadInfo extends AsyncTask<Void, Integer, Boolean>
             Log.i("OJO",fecha.toString());
         } catch (ParseException e) {
             e.printStackTrace();
+            Log.i("ERROR","NO PUDE CONVERTIR"+fechaini);
         }
-
+        String URL="http://grupoiiasa.com:84/WSMobile/ListadoMaquinariaUsada/tipos_listados.svc/maquinariasUsadas/?fechainicio=20150901&fechafin=20150930";
         //AQUI SE DEBE CONCATENAR LOS PARAMETROS CUANDO LOS TENGAS LISTOS PARA HACER EL REQUEST
         StringBuilder builder = new StringBuilder();
         HttpClient client = new DefaultHttpClient();
@@ -294,8 +296,6 @@ class DownloadInfo extends AsyncTask<Void, Integer, Boolean>
         Log.i("OJO",json);
 
         try {
-            //JSONObject jsonObject = new JSONObject(json);
-
 
             JSONObject jsonRootObject=new JSONObject(json);
             JSONArray arr=jsonRootObject.optJSONArray("Maquina");

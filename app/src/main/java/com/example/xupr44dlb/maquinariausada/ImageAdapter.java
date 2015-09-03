@@ -1,31 +1,30 @@
 package com.example.xupr44dlb.maquinariausada;
 
+
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Gallery;
 import android.widget.ImageView;
 
+import java.util.ArrayList;
+
 public class ImageAdapter extends BaseAdapter {
     private Context mContext;
+    private ArrayList<Imagen> mImagenes;
 
-    //array of integers for images IDs
-    private Integer[] mImageIds = {
-            R.drawable.maquina,
-            R.drawable.ic_iiasa,
-            R.drawable.maquina
-
-    };
 
     //constructor
-    public ImageAdapter (Context c){
+    public ImageAdapter (Context c, ArrayList<Imagen> imagenes){
         mContext = c;
+        mImagenes=imagenes;
     }
 
     @Override
     public int getCount() {
-        return mImageIds.length;
+        return mImagenes.size();
     }
 
     @Override
@@ -41,8 +40,7 @@ public class ImageAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         ImageView imageView = new ImageView(mContext);
-
-        imageView.setImageResource(mImageIds[i]);
+        new ImageLoadTask(mImagenes.get(i).getUrl(),imageView).execute();
         imageView.setLayoutParams(new Gallery.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT));
         return imageView;
     }

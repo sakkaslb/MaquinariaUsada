@@ -10,6 +10,10 @@ public class Imagen {
     String descripcion, url;
     Date fecha_modificacion;
 
+    public Imagen()
+    {
+
+    }
     public Imagen(int id, String descripcion, String url, Date fecha_modificacion) {
         this.id = id;
         this.descripcion = descripcion;

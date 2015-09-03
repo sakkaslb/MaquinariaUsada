@@ -1,6 +1,8 @@
 package com.example.xupr44dlb.maquinariausada;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Typeface;
@@ -15,11 +17,28 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Gallery;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.StatusLine;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 
 public class DetalleMaquinaActivity extends Activity implements View.OnClickListener{
@@ -55,11 +74,22 @@ public class DetalleMaquinaActivity extends Activity implements View.OnClickList
         txtDetalleHeader.setText(bundle.getString("familia")+" - "+bundle.getString("modelo"));
 
 
+        //METODO PARA DESCARGAR LA IMAGEN DE HTTP
+        ArrayList<Imagen> imagenes=new ArrayList<Imagen>();
+        try {
+            imagenes=new DownloadImages(this,this,bundle.getInt("id")).execute().get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
         Gallery gallery = (Gallery)findViewById(R.id.gallery);
-        gallery.setAdapter(new ImageAdapter(this));
+        gallery.setAdapter(new ImageAdapter(this,imagenes));
+
         mDotsLayout = (LinearLayout)findViewById(R.id.image_count);
         //here we count the number of images we have to know how many dots we need
-        mDotsCount = gallery.getAdapter().getCount();
+        mDotsCount = imagenes.size();
 
         //here we create the dots
         //as you can see the dots are nothing but "."  of large size
@@ -137,20 +167,76 @@ public class DetalleMaquinaActivity extends Activity implements View.OnClickList
 }
  class DownloadImages extends AsyncTask<Void, Integer, ArrayList<Imagen>>
  {
+     Context context;
+     Activity activity;
+     Integer mId;
+     ProgressDialog dialog;
+     public DownloadImages( Context context, Activity activity, int id) {
+         mId=id;
+         this.context=context;
+         this.activity=activity;
+         dialog=new ProgressDialog(context);
+     }
 
      @Override
      protected ArrayList<Imagen> doInBackground(Void... params) {
-         return null;
+         ArrayList<Imagen> imagens=new ArrayList<Imagen>();
+         String URL="http://grupoiiasa.com:84/WSMobile/ListadoMaquinariaUsada/tipos_listados.svc/maquinariasUsadasImagenesxId/?idmaquina="+mId.toString();
+         Log.i("OJO",URL);
+         StringBuilder builder = new StringBuilder();
+         HttpClient client = new DefaultHttpClient();
+         HttpGet httpGet = new HttpGet(URL);
+         try{
+             HttpResponse response = client.execute(httpGet);
+             StatusLine statusLine = response.getStatusLine();
+             int statusCode = statusLine.getStatusCode();
+             if(statusCode == 200){
+                 HttpEntity entity = response.getEntity();
+                 InputStream content = entity.getContent();
+                 BufferedReader reader = new BufferedReader(new InputStreamReader(content));
+                 String line;
+                 while((line = reader.readLine()) != null){
+                     builder.append(line);
+                 }
+             } else {
+                 Log.e(MainActivity.class.toString(),"Failed to get JSON object");
+             }
+         }catch(ClientProtocolException e){
+             e.printStackTrace();
+         } catch (IOException e){
+             e.printStackTrace();
+         }
+         Log.i("OJO",builder.toString());
+         String json=builder.toString();
+         try {
+             JSONObject jsonRootObject=new JSONObject(json);
+             JSONArray arr=jsonRootObject.optJSONArray("Maquina");
+             for (int i=0; i<arr.length();i++){
+                 JSONObject jsonProductObject = arr.getJSONObject(i);
+                 Integer id=jsonProductObject.getInt("id");
+                 Imagen imagen=new Imagen();
+                 imagen.setId(jsonProductObject.getInt("idmaquinaria"));
+                 imagen.setDescripcion(jsonProductObject.getString("descripcion"));
+                 imagen.setUrl(jsonProductObject.getString("Link"));
+                 imagens.add(imagen);
+             }
+         } catch (JSONException e){
+             e.printStackTrace();
+         }
+         return imagens;
      }
 
      @Override
      protected void onPreExecute() {
          super.onPreExecute();
+         dialog.setMessage("Descargando imágenes...");
+         dialog.show();
      }
 
      @Override
      protected void onPostExecute(ArrayList<Imagen> imagens) {
          super.onPostExecute(imagens);
+         dialog.dismiss();
      }
  }
 
