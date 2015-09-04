@@ -2,12 +2,18 @@ package com.example.xupr44dlb.maquinariausada;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Display;
@@ -16,11 +22,19 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.codec.Base64;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -34,10 +48,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
 
@@ -46,6 +65,7 @@ public class DetalleMaquinaActivity extends Activity implements View.OnClickList
     private int mDotsCount;
     private LinearLayout mDotsLayout;
     TextView txtPrecio, txtFamilia, txtModelo, txtUbicacion, txtDescripcion, txtSerie, txtAnio, txtHoras, txtGarantia,txtDetalleHeader;
+    Button btnCotizar;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -64,8 +84,8 @@ public class DetalleMaquinaActivity extends Activity implements View.OnClickList
 
         txtModelo.setText(bundle.getString("modelo"));
         txtFamilia.setText(bundle.getString("familia"));
-        txtUbicacion.setText(bundle.getString("ubicacion"));
-        txtDescripcion.setText(bundle.getString("descripcion"));
+        txtUbicacion.setText(bundle.getString("ubicacion").replace("null","No hay datos disponibles"));
+        txtDescripcion.setText(bundle.getString("descripcion").replace("null","No hay datos disponibles"));
         txtSerie.setText(bundle.getString("serie"));
         txtAnio.setText(bundle.getString("anio"));
         txtHoras.setText(bundle.getString("horas"));
@@ -73,6 +93,8 @@ public class DetalleMaquinaActivity extends Activity implements View.OnClickList
         txtPrecio.setText(bundle.getString("precio"));
         txtDetalleHeader.setText(bundle.getString("familia")+" - "+bundle.getString("modelo"));
 
+        btnCotizar=(Button) findViewById(R.id.btnCotizar);
+        btnCotizar.setOnClickListener(this);
 
         //METODO PARA DESCARGAR LA IMAGEN DE HTTP
         ArrayList<Imagen> imagenes=new ArrayList<Imagen>();
@@ -162,6 +184,99 @@ public class DetalleMaquinaActivity extends Activity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btnCotizar:{
+
+                String nombre=txtFamilia.getText().toString().replace(" ","")+"_"+txtModelo.getText().toString().replace(" ","")+"_"+txtSerie.getText().toString().replace(" ","");
+                Log.i("OJO","ENTRE A COTIZAR "+nombre);
+                try {
+                    createPdf(nombre);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (DocumentException e) {
+                    e.printStackTrace();
+                }
+                break;
+            }
+        }
+
+    }
+    private void createPdf(String nombre) throws FileNotFoundException, DocumentException{
+
+        File pdfFolder = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/maquinariausada");
+        if (!pdfFolder.exists()) {
+            pdfFolder.mkdirs();
+            Log.i("OJO", "Pdf Directory created");
+        }
+        File myFile = new File(pdfFolder+"/"+nombre+ ".pdf");
+
+            FileOutputStream output = new FileOutputStream(myFile);
+            Rectangle pagesize = new Rectangle(216f, 720f);
+            Document document = new Document(pagesize, 36f, 72f, 108f, 180f);
+
+                PdfWriter.getInstance(document, output);
+                document.open();
+                document.add(new Paragraph("Hola"));
+                document.add(new Paragraph("Pruebas"));
+                document.close();
+                promptForNextAction(nombre);
+
+
+    }
+    public void viewPdf(String nombre){
+        File pdfFolder = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/maquinariausada");
+        File myFile = new File(pdfFolder+"/"+nombre+ ".pdf");
+
+        Intent target = new Intent(Intent.ACTION_VIEW);
+
+        target.setDataAndType(Uri.fromFile(myFile), "application/pdf");
+        target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        Intent intent = Intent.createChooser(target, "Abrir el archivo");
+        try {
+            startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(getApplicationContext(), "Instale alguna aplicacion para ver PDFs", Toast.LENGTH_LONG).show();
+        }
+    }
+    private void emailNote(String nombre)
+    {
+        File pdfFolder = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/maquinariausada");
+        File myFile = new File(pdfFolder+"/"+nombre+ ".pdf");
+        Intent email = new Intent(Intent.ACTION_SEND);
+        email.putExtra(Intent.EXTRA_SUBJECT,nombre);
+        email.putExtra(Intent.EXTRA_TEXT,"Por favor contactarnos");
+        Uri uri = Uri.parse(myFile.getAbsolutePath());
+        email.putExtra(Intent.EXTRA_STREAM, uri);
+        email.setType("message/rfc822");
+        Intent intent = Intent.createChooser(email, "Abrir el archivo");
+        try {
+            startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(getApplicationContext(), "Instale alguna aplicacion para enviar emails", Toast.LENGTH_LONG).show();
+        }
+    }
+    public void promptForNextAction(String nombre)
+    {
+        final String archivo=nombre;
+        final String[] options = { getString(R.string.label_email), getString(R.string.label_preview),
+                getString(R.string.label_cancel) };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Se guardó el PDF con éxito.");
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (options[which].equals(getString(R.string.label_email))){
+                    emailNote(archivo);
+                }else if (options[which].equals(getString(R.string.label_preview))){
+                    viewPdf(archivo);
+                }else if (options[which].equals(getString(R.string.label_cancel))){
+                    dialog.dismiss();
+                }
+            }
+        });
+
+        builder.show();
 
     }
 }
@@ -208,6 +323,8 @@ public class DetalleMaquinaActivity extends Activity implements View.OnClickList
          }
          Log.i("OJO",builder.toString());
          String json=builder.toString();
+         if (json.contains("No hay datos para mostrar")){ Log.i("ERROR","NO HAY IMAGENES");}
+         else{
          try {
              JSONObject jsonRootObject=new JSONObject(json);
              JSONArray arr=jsonRootObject.optJSONArray("Maquina");
@@ -222,7 +339,7 @@ public class DetalleMaquinaActivity extends Activity implements View.OnClickList
              }
          } catch (JSONException e){
              e.printStackTrace();
-         }
+         }}
          return imagens;
      }
 

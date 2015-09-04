@@ -56,5 +56,8 @@
         <item name="colorControlActivated">@color/color_accent</item>
         <item name="colorControlHighlight">@color/color_accent</item>
     </style>
+    <style name="Theme.MyFancyTheme" parent="android:Theme.Holo.Light">
+        <item name="android:homeAsUpIndicator">@drawable/ic_back</item>
+    </style>
 
  </resources>

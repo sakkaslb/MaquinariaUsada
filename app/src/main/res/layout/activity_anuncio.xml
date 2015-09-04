@@ -38,7 +38,7 @@
             android:id="@+id/lblAnuncioHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2009-CAT-988H "
+            android:text="CAT"
             android:textSize="20dp"
             android:textStyle="bold"
             android:gravity="center_horizontal"
@@ -48,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="$103,000"
+            android:text="$0"
             android:textSize="20dp"
             android:id="@+id/lblAnuncioPrecio"
             android:textStyle="italic"
@@ -70,7 +70,8 @@
             android:layout_height="wrap_content"
             android:text="@string/lblHoras"
             android:gravity="center_horizontal"
-            android:layout_marginRight="@dimen/size3"/>
+            android:layout_marginRight="@dimen/size3"
+            android:textSize="10dp"/>
 
         <TextView
             android:id="@+id/lblAnuncioGarantia"
@@ -78,8 +79,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/lblGarantia"
-            android:gravity="center_horizontal"
-            />
+            android:textSize="10dp"
+            android:gravity="center_horizontal"/>
     </LinearLayout>
 
 </LinearLayout>

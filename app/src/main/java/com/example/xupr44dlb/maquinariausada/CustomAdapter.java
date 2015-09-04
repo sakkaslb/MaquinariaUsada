@@ -31,11 +31,10 @@ public class CustomAdapter extends BaseAdapter {
 
     private static LayoutInflater inflater = null;
 
-   // public CustomAdapter(Activity menuActivity, String[] prgmNameList, int[] prgmImages) {
+
    public CustomAdapter(Activity menuActivity, ArrayList<Maquina> maquinaria) {
         // TODO Auto-generated constructor stub
-        //result = prgmNameList;
-       // imageId = prgmImages;
+
 
         context = menuActivity;
         maquinas= maquinaria;
@@ -86,12 +85,16 @@ public class CustomAdapter extends BaseAdapter {
         // holder.img.setImageResource(imageId[position]);
         holder.tv.setText(maquinas.get(position).getModelo()+" ");
         NumberFormat fmt = NumberFormat.getCurrencyInstance();
-        final String precio=fmt.format(maquinas.get(position).getPrecioCertificado()).toString();
+        final String precio=fmt.format(maquinas.get(position).getPrecioSin()).toString();
         holder.precio.setText(precio);
         String hora=String.valueOf(maquinas.get(position).getHoras());
         holder.horas.setText("Horas: "+hora);
         holder.garantia.setText("Garantia: "+maquinas.get(position).getGarantia());
-        new ImageLoadTask(maquinas.get(position).getLink(), holder.img).execute();
+        if (maquinas.get(position).getLink().contains("http://"))
+        {
+            new ImageLoadTask(maquinas.get(position).getLink(), holder.img).execute();
+        }
+
 
         rowView.setOnClickListener(new View.OnClickListener() {
 

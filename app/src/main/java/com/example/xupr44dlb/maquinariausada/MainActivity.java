@@ -94,7 +94,11 @@ public class MainActivity extends Activity implements View.OnClickListener{
 
                 if (res){
                     Toast.makeText(getApplicationContext(), "Acceso exitoso", Toast.LENGTH_LONG).show();
+                    ProgressDialog progreso=new ProgressDialog(this);
+                    progreso.setMessage("Descargando maquinas...");
+                    progreso.show();
                     new DownloadInfo(this,this).execute();
+                    progreso.dismiss();
                     Intent vintent=new Intent(MainActivity.this, MenuActivity.class);
                     Bundle b=new Bundle();
                     b.putBoolean("descargaInfo",false); //para pasar varios campos
@@ -412,10 +416,12 @@ class ValidateData extends AsyncTask<Void, Integer, Boolean>
     Activity activity;
     Integer id;
     Boolean result=false;
+
     ValidateData(Context context, Activity activity, Integer id) {
        this.context=context;
        this.activity=activity;
        this.id=id;
+
     }
 
     @Override
@@ -452,11 +458,13 @@ class ValidateData extends AsyncTask<Void, Integer, Boolean>
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
+
     }
 
     @Override
     protected void onPostExecute(Boolean aBoolean) {
         super.onPostExecute(aBoolean);
+
     }
 }
 

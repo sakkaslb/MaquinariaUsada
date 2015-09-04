@@ -1,6 +1,7 @@
 package com.example.xupr44dlb.maquinariausada;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -72,7 +73,11 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         if (downloadInfo)
         {
             Log.i("MENU","ENTRE A DESCARGAR INFORMACION");
+            ProgressDialog progreso=new ProgressDialog(this);
+            progreso.setMessage("Descargando maquinas...");
+            progreso.show();
             new DownloadInfo(this,this).execute();
+            progreso.dismiss();
             //GUARDAR ULTIMA FECHA DE DESCARGA
             SharedPreferences prefs=getSharedPreferences("loginUsuarios", Context.MODE_PRIVATE);
             Calendar c = Calendar.getInstance();
@@ -129,14 +134,22 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         //Gridview
         grid=(GridView) findViewById(R.id.gridView1);
         try {
-           listadoMaquinas=new ObtenerListado(this,this).execute().get();
+            ProgressDialog progreso=new ProgressDialog(this);
+            progreso.setMessage("Descargando imagenes...");
+            progreso.show();
+            listadoMaquinas=new ObtenerListado(this,this).execute().get();
+            progreso.dismiss();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
         Log.i("OBSERVACION","SI EJECUTE OBTENER LISTADO");
+        ProgressDialog progreso=new ProgressDialog(this);
+        progreso.setMessage("Cargando informacion...");
+        progreso.show();
         grid.setAdapter(new CustomAdapter(this,listadoMaquinas));
+        progreso.dismiss();
        // grid.setAdapter(new CustomAdapter(this,prgmNameList,prgmImages));
     }
 
@@ -167,6 +180,10 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
             Intent i=new Intent(this, MainActivity.class);
             startActivity(i);
             return true;
+        }
+        if(id==R.id.action_vercotizaciones){
+            Intent i=new Intent(this, ListadoArchivosActivity.class);
+            startActivity(i);
         }
 
         return super.onOptionsItemSelected(item);
@@ -232,7 +249,7 @@ class ObtenerListado extends AsyncTask<Void,Integer,ArrayList<Maquina>>{
         USQLiteHelper usuario=new USQLiteHelper(context,"DBUsada",null,1);
         SQLiteDatabase db=usuario.getWritableDatabase();
         Cursor c=db.rawQuery("SELECT familia, localizacion, modelo, serie, horas, garantia, precio_sin_acondicionar, precio_cat_usado_certificado, " +
-                "precio_credito, descripcion, link,id from Maquinaria",null);
+                "precio_credito, descripcion, link,id, anio from Maquinaria",null);
         if (c.moveToFirst()){
             do{
                 Log.i("CONSULTA LISTADO","ENTRE POR EL ID"+c.getInt(11));
@@ -249,6 +266,7 @@ class ObtenerListado extends AsyncTask<Void,Integer,ArrayList<Maquina>>{
                 maquinaria.setDescripcion(c.getString(9));
                 maquinaria.setLink(c.getString(10));
                 maquinaria.setId(c.getInt(11));
+                maquinaria.setAnio(c.getInt(12));
                 resultado.add(maquinaria);
 
             }

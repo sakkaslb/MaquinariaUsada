@@ -14,10 +14,5 @@
         android:title="Search"
         android:icon="@drawable/ic_search"
         app:showAsAction="ifRoom"/>
-    <item
-        android:id="@+id/action_user"
-        android:orderInCategory="200"
-        android:title="User"
-        android:icon="@drawable/ic_cotizacion"
-        app:showAsAction="ifRoom"/>
+
 </menu>
