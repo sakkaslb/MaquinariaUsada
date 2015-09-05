@@ -6,9 +6,14 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -31,6 +36,7 @@ import android.widget.Toast;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -48,6 +54,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -153,6 +160,7 @@ public class DetalleMaquinaActivity extends Activity implements View.OnClickList
         // Creates the layout for the window and the look of it
 
         requestWindowFeature(Window.FEATURE_ACTION_BAR);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_detallemaquina);
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND,
@@ -218,6 +226,21 @@ public class DetalleMaquinaActivity extends Activity implements View.OnClickList
                 document.open();
                 document.add(new Paragraph("Hola"));
                 document.add(new Paragraph("Pruebas"));
+        try {
+
+            document.open();
+            Drawable d = getResources().getDrawable(R.drawable.repuestos);
+            BitmapDrawable bitDw = ((BitmapDrawable) d);
+            Bitmap bmp = bitDw.getBitmap();
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bmp.compress(Bitmap.CompressFormat.PNG, 200, stream);
+            Image image = Image.getInstance(stream.toByteArray());
+            document.add(image);
+            document.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
                 document.close();
                 promptForNextAction(nombre);
 

@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
@@ -37,7 +38,8 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     private Toolbar toolbar;
     Button btnFiltrar;
     ToggleButton btnVerFiltros;
-    Spinner cmbFamilias, cmbOrden, cmbPrecio, cmbRegion, cmbUbicacion;
+    Spinner cmbFamilias, cmbOrden, cmbPrecio, cmbRegion;
+    EditText txtModelo, txtBusquedaGeneral;
     Intent vintent;
     LinearLayout filtrosLayout;
     RelativeLayout filtrospadreLayout;
@@ -59,10 +61,12 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState){
 
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_menu);
 
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
+        txtBusquedaGeneral=(EditText) findViewById(R.id.txtBusquedaGeneral);
 
         //DESCARGA DE INFORMACION
 
@@ -100,13 +104,14 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         filtrosLayout=(LinearLayout) findViewById(R.id.LayoutFiltros);
         filtrospadreLayout=(RelativeLayout) findViewById(R.id.linearLayout2);
 
+        //Modelos
 
+        txtModelo=(EditText) findViewById(R.id.txtModelo);
+
+        ArrayAdapter<CharSequence> adaptador;
         //Cargando combo de familias
         cmbFamilias=(Spinner) findViewById(R.id.cmbFamilia);
-        ArrayAdapter<CharSequence> adaptador=
-                ArrayAdapter.createFromResource(this, R.array.Familias,
-                        android.R.layout.simple_spinner_item);
-
+        adaptador=ArrayAdapter.createFromResource(this,R.array.Familias,android.R.layout.simple_spinner_item);
         adaptador.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         cmbFamilias.setAdapter(adaptador);
 
@@ -131,25 +136,20 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         adaptador.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         cmbRegion.setAdapter(adaptador);
 
+
         //Gridview
         grid=(GridView) findViewById(R.id.gridView1);
-        try {
-            ProgressDialog progreso=new ProgressDialog(this);
-            progreso.setMessage("Descargando imagenes...");
-            progreso.show();
-            listadoMaquinas=new ObtenerListado(this,this).execute().get();
-            progreso.dismiss();
+        try {  listadoMaquinas=new ObtenerListado(this,this,cmbOrden.getSelectedItem().toString(),cmbFamilias.getSelectedItem().toString(),txtModelo.getText().toString(),cmbRegion.getSelectedItem().toString(),cmbPrecio.getSelectedItem().toString(), txtBusquedaGeneral.getText().toString()).execute().get();
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
         Log.i("OBSERVACION","SI EJECUTE OBTENER LISTADO");
-        ProgressDialog progreso=new ProgressDialog(this);
-        progreso.setMessage("Cargando informacion...");
-        progreso.show();
+
         grid.setAdapter(new CustomAdapter(this,listadoMaquinas));
-        progreso.dismiss();
+
        // grid.setAdapter(new CustomAdapter(this,prgmNameList,prgmImages));
     }
 
@@ -185,7 +185,20 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
             Intent i=new Intent(this, ListadoArchivosActivity.class);
             startActivity(i);
         }
+         if(id==R.id.action_search){
+             try {
+                 Log.i("OBSERVACION","ANTES DE EJECUTAR OBTENER LISTADO X BUSQUEDA");
+                 listadoMaquinas=new ObtenerListado(this,this,"","","","","",txtBusquedaGeneral.getText().toString()).execute().get();
 
+             } catch (InterruptedException e) {
+                 e.printStackTrace();
+             } catch (ExecutionException e) {
+                 e.printStackTrace();
+             }
+             Log.i("OBSERVACION","DESPUES DE EJECUTAR OBTENER LISTADO X BUSQUEDA");
+
+             grid.setAdapter(new CustomAdapter(this, listadoMaquinas));
+         }
         return super.onOptionsItemSelected(item);
     }
 
@@ -211,8 +224,18 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
             }
             case R.id.btnFiltrar:
             {
-                vintent=new Intent(this,MainActivity.class);
-                startActivity(vintent);
+
+                try {
+
+                    listadoMaquinas=new ObtenerListado(this,this,cmbOrden.getSelectedItem().toString(),cmbFamilias.getSelectedItem().toString(),txtModelo.getText().toString(),cmbRegion.getSelectedItem().toString(),cmbPrecio.getSelectedItem().toString(),txtBusquedaGeneral.getText().toString()).execute().get();
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+                grid.setAdapter(new CustomAdapter(this,listadoMaquinas));
+
                 break;
             }
 
@@ -236,20 +259,78 @@ class ObtenerListado extends AsyncTask<Void,Integer,ArrayList<Maquina>>{
 
    Context context;
    Activity activity;
+   String orden, familia, modelo, localizacion, precio, busqueda;
+   ProgressDialog progreso;
 
-    public ObtenerListado(Context ctx, Activity activity ) {
+    public ObtenerListado(Context ctx, Activity activity,String p_orden, String p_familia, String p_modelo, String p_localizacion, String p_precio, String p_busqueda) {
         this.context=ctx;
         this.activity=activity;
+        this.orden=p_orden;
+        this.familia=p_familia;
+        this.modelo=p_modelo;
+        this.localizacion=p_localizacion;
+        this.precio=p_precio;
+        this.busqueda=p_busqueda;
+        progreso=new ProgressDialog(context);
     }
+
 
     @Override
     protected ArrayList<Maquina> doInBackground(Void... params) {
-        Log.i("CONSULTA LISTADO","SI ENTRE");
+
         ArrayList<Maquina> resultado=new ArrayList<Maquina>();
         USQLiteHelper usuario=new USQLiteHelper(context,"DBUsada",null,1);
         SQLiteDatabase db=usuario.getWritableDatabase();
-        Cursor c=db.rawQuery("SELECT familia, localizacion, modelo, serie, horas, garantia, precio_sin_acondicionar, precio_cat_usado_certificado, " +
-                "precio_credito, descripcion, link,id, anio from Maquinaria",null);
+        String query="";
+        Log.i("OJO",busqueda);
+        if (modelo==null){
+            modelo="";
+        }
+        if(familia==null){
+            familia="";
+        }
+        if(localizacion==null)
+        {
+            localizacion="";
+        }
+        if(busqueda.isEmpty()){
+
+        query="SELECT familia, localizacion, modelo, serie, horas, garantia, precio_sin_acondicionar, precio_cat_usado_certificado,"+
+                      " precio_credito, descripcion, link,id, anio from Maquinaria where familia like '%"+familia+"%' and modelo like '%"+modelo+"%' and localizacion like '%"+localizacion+"%' ";
+
+        if(precio.contains("Menor a 35.000")){
+             query+=" and precio_sin_acondicionar<35000 ";
+        }else if(precio.contains("35.000 a 50.000")){
+            query+=" and precio_sin_acondicionar>=35000 and precio_sin_acondicionar<=50000 ";
+        } else if(precio.contains("50.000 a 100.000")){
+            query+=" and precio_sin_acondicionar>50000 and precio_sin_acondicionar<=100000 ";
+        } else if(precio.contains("100.000 en adelante")){
+            query+=" and precio_sin_acondicionar>100000 ";
+        }else {
+            query+=" and precio_sin_acondicionar>0 ";
+        }
+
+        if(orden.contains("Más recientes")) {
+            query += " ORDER BY fecha_modificacion DESC ";
+        }
+        else if (orden.contains("Precio: Menor a Mayor")){
+            query += " ORDER BY precio_sin_acondicionar ";
+
+        } else if(orden.contains("Precio: Mayor a Menor")){
+            query += " ORDER BY precio_sin_acondicionar DESC";
+
+        } else {
+            query += " ORDER BY modelo ";
+        }
+        } else {
+            query="SELECT familia, localizacion, modelo, serie, horas, garantia, precio_sin_acondicionar, precio_cat_usado_certificado,"+
+                    " precio_credito, descripcion, link,id, anio from Maquinaria where familia like '%"+busqueda+"%' or modelo like '%"+busqueda+"%' or localizacion like '%"+busqueda+"%' or serie like '%"+busqueda+"%'";
+
+        }
+
+        Log.i("CONSULTA LISTADO",query);
+
+        Cursor c=db.rawQuery(query,null);
         if (c.moveToFirst()){
             do{
                 Log.i("CONSULTA LISTADO","ENTRE POR EL ID"+c.getInt(11));
@@ -282,11 +363,13 @@ class ObtenerListado extends AsyncTask<Void,Integer,ArrayList<Maquina>>{
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
+        progreso.setMessage("Cargando equipos...");
+        progreso.show();
     }
 
     @Override
     protected void onPostExecute(ArrayList<Maquina> maquinas) {
         super.onPostExecute(maquinas);
-
+        progreso.dismiss();
     }
 }

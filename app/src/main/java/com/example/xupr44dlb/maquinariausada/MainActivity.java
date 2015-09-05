@@ -6,6 +6,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
@@ -49,13 +50,14 @@ public class MainActivity extends Activity implements View.OnClickListener{
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_main);
         txtUsuario=(EditText)findViewById(R.id.txtUsuario);
         txtContrasena=(EditText)findViewById(R.id.txtPassword);
         Button btnLogin=(Button) findViewById(R.id.btnLogin);
         btnLogin.setOnClickListener(this);
-        TextView lblRegistrate=(TextView) findViewById(R.id.lblRegistrate);
-        lblRegistrate.setOnClickListener(this);
+       // TextView lblRegistrate=(TextView) findViewById(R.id.lblRegistrate);
+        //lblRegistrate.setOnClickListener(this);
 
     }
 
@@ -116,12 +118,12 @@ public class MainActivity extends Activity implements View.OnClickListener{
 
                 break;
             }
-            case R.id.lblRegistrate:{
+            /*case R.id.lblRegistrate:{
                 Intent vintent=new Intent(MainActivity.this,RegistroActivity.class);
                 vintent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(vintent);
                 break;
-            }
+            }*/
 
         }
     }

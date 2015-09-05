@@ -17,6 +17,7 @@
     <!--Main-->
     <string name="cotizaciones">Ver últimas cotizaciones</string>
     <string name="lblBusqueda">Ordenar por:</string>
+    <string name="BusquedaGeneral">¿Qué deseas buscar?</string>
     <string-array name="orden">
         <item>Más recientes</item>
         <item>Precio: Menor a Mayor</item>
@@ -39,6 +40,7 @@
 
     <!--Listados filtros en Main-->
     <string-array name="Familias">
+        <item></item>
         <item>Accesorios</item>
         <item>Cargadoras</item>
         <item>Compactadoras</item>
@@ -58,14 +60,17 @@
     </string-array>
 
     <string-array name="Precios">
+        <item></item>
         <item>Menor a 35.000</item>
         <item>35.000 a 50.000</item>
         <item>50.000 a 100.000</item>
         <item>100.000 en adelante</item>
     </string-array>
     <string-array name="Regiones">
+        <item></item>
         <item>Costa/Austro</item>
         <item>Sierra/Oriente</item>
+        <item>Campamento del cliente</item>
     </string-array>
 
 
