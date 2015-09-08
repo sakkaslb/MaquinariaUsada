@@ -34,11 +34,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
 import com.itextpdf.text.Image;
+import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.codec.Base64;
 
@@ -61,6 +68,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -217,33 +225,62 @@ public class DetalleMaquinaActivity extends Activity implements View.OnClickList
             Log.i("OJO", "Pdf Directory created");
         }
         File myFile = new File(pdfFolder+"/"+nombre+ ".pdf");
-
-            FileOutputStream output = new FileOutputStream(myFile);
-            Rectangle pagesize = new Rectangle(216f, 720f);
-            Document document = new Document(pagesize, 36f, 72f, 108f, 180f);
-
-                PdfWriter.getInstance(document, output);
-                document.open();
-                document.add(new Paragraph("Hola"));
-                document.add(new Paragraph("Pruebas"));
+        Font bfBold12 = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD, new BaseColor(0, 0, 0));
+        Font bf12 = new Font(Font.FontFamily.TIMES_ROMAN, 12);
+        FileOutputStream output = new FileOutputStream(myFile);
+        Document document = new Document();
+        DecimalFormat df=new DecimalFormat("0.00");
+        PdfWriter.getInstance(document, output);
         try {
 
             document.open();
-            Drawable d = getResources().getDrawable(R.drawable.repuestos);
+            document.setPageSize(PageSize.A4);
+            document.add(new Paragraph("Cotización de Maquinaria Usada"));
+
+            float[] columnWidths={1.5f, 2f, 5f, 2f};
+            PdfPTable table=new PdfPTable(columnWidths);
+            table.setWidthPercentage(90f);
+
+            insertCell(table,"Atributo", Element.ALIGN_CENTER,1,bfBold12);
+            insertCell(table,"Descripción", Element.ALIGN_LEFT,1,bfBold12);
+            table.setHeaderRows(1);
+            Paragraph parrafo=new Paragraph("_");
+            parrafo.add(table);
+            document.add(parrafo);
+          /*  Drawable d = getResources().getDrawable(R.drawable.repuestos);
             BitmapDrawable bitDw = ((BitmapDrawable) d);
             Bitmap bmp = bitDw.getBitmap();
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             bmp.compress(Bitmap.CompressFormat.PNG, 200, stream);
             Image image = Image.getInstance(stream.toByteArray());
-            document.add(image);
-            document.close();
-
+            document.add(image);*/
         } catch (Exception e) {
             e.printStackTrace();
         }
                 document.close();
-                promptForNextAction(nombre);
+        try {
+            output.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        promptForNextAction(nombre);
 
+
+    }
+    private void insertCell(PdfPTable table, String text, int align, int colspan, Font font){
+
+        //create a new cell with the specified Text and Font
+        PdfPCell cell = new PdfPCell(new Phrase(text.trim(), font));
+        //set the cell alignment
+        cell.setHorizontalAlignment(align);
+        //set the cell column span in case you want to merge two or more cells
+        cell.setColspan(colspan);
+        //in case there is no text and you wan to create an empty row
+        if(text.trim().equalsIgnoreCase("")){
+            cell.setMinimumHeight(10f);
+        }
+        //add the call to the table
+        table.addCell(cell);
 
     }
     public void viewPdf(String nombre){
