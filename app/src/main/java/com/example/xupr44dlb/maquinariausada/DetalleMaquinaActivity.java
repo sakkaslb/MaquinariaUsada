@@ -85,7 +85,12 @@ public class DetalleMaquinaActivity extends Activity implements View.OnClickList
         txtFamilia.setText(bundle.getString("familia"));
         txtUbicacion.setText(bundle.getString("ubicacion").replace("null","No hay datos disponibles"));
         txtDescripcion.setText(bundle.getString("descripcion").replace("null","No hay datos disponibles"));
-        txtSerie.setText(bundle.getString("serie"));
+
+        if (bundle.getString("serie").length()>=15){
+            txtSerie.setText(bundle.getString("serie").substring(1,15));
+        } else {
+            txtSerie.setText(bundle.getString("serie"));
+        }
         txtAnio.setText(bundle.getString("anio"));
         txtHoras.setText(bundle.getString("horas"));
         txtGarantia.setText(bundle.getString("garantia"));
