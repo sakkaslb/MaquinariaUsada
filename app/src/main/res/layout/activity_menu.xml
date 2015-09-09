@@ -14,7 +14,7 @@
     <RelativeLayout
         android:id="@+id/linearLayout2"
         android:layout_width="250dp"
-        android:layout_height="fill_parent"
+        android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/tool_bar"
@@ -199,7 +199,7 @@
 
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="match_parent"
         android:layout_alignBottom="@+id/linearLayout2"
         android:layout_toEndOf="@+id/linearLayout2"
         android:layout_toRightOf="@+id/linearLayout2">
@@ -208,14 +208,14 @@
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginTop="5dp"
                 android:layout_alignParentBottom="true">
 
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="wrap_content"
-                    android:layout_height="fill_parent">
+                    android:layout_height="wrap_content">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -232,7 +232,7 @@
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|right">
                     <TextView
                         android:layout_width="wrap_content"
@@ -255,11 +255,11 @@
                 <GridView
                     android:id="@+id/gridView1"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="fill_parent"
                     android:layout_alignParentLeft="true"
-                    android:layout_below="@+id/textView1"
                     android:numColumns="3"
-                    android:background="@color/ColorSecondaryDark">
+                    android:background="@color/ColorSecondaryDark"
+                    android:minHeight="750dp">
 
                 </GridView>
 

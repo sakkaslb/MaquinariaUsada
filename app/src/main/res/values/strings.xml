@@ -42,6 +42,7 @@
     <string-array name="Familias">
         <item></item>
         <item>Accesorios</item>
+        <item>Camiones articulados</item>
         <item>Cargadoras</item>
         <item>Compactadoras</item>
         <item>Equipos agrícolas</item>
@@ -57,6 +58,8 @@
         <item>Motores</item>
         <item>Retroexcavadoras</item>
         <item>Tractores</item>
+        <item>Varios</item>
+
     </string-array>
 
     <string-array name="Precios">
@@ -68,8 +71,15 @@
     </string-array>
     <string-array name="Regiones">
         <item></item>
-        <item>Costa/Austro</item>
-        <item>Sierra/Oriente</item>
+        <item>IIASA Guayaquil</item>
+        <item>IIASA Quito</item>
+        <item>IIASA Loja</item>
+        <item>IIASA Coca</item>
+        <item>IIASA Cuenca</item>
+        <item>IIASA Manta</item>
+        <item>IIASA Machala</item>
+        <item>IIASA Portoviejo</item>
+        <item>IIASA Santo Domingo</item>
         <item>Campamento del cliente</item>
     </string-array>
 

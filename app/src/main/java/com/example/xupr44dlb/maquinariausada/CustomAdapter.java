@@ -16,6 +16,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
+
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -90,9 +97,35 @@ public class CustomAdapter extends BaseAdapter {
         String hora=String.valueOf(maquinas.get(position).getHoras());
         holder.horas.setText("Horas: "+hora);
         holder.garantia.setText("Garantia: "+maquinas.get(position).getGarantia());
+
+        //NUEVA MANERA DE CARGAR IMAGENES
+        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
+                .cacheOnDisc(true).cacheInMemory(true)
+                .imageScaleType(ImageScaleType.EXACTLY)
+                .displayer(new FadeInBitmapDisplayer(300)).build();
+
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
+                context)
+                .defaultDisplayImageOptions(defaultOptions)
+                .memoryCache(new WeakMemoryCache())
+                .discCacheSize(100 * 1024 * 1024).build();
+
+        ImageLoader.getInstance().init(config);
+
+        // END - UNIVERSAL IMAGE LOADER SETUP
+
         if (maquinas.get(position).getLink().contains("http://"))
         {
-            new ImageLoadTask(maquinas.get(position).getLink(), holder.img).execute();
+            ImageLoader imageLoader = ImageLoader.getInstance();
+            DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true)
+                    .cacheOnDisc(true).resetViewBeforeLoading(true)
+                    .showImageForEmptyUri(R.drawable.ic_iiasa)
+                    .showImageOnFail(R.drawable.ic_iiasa)
+                    .showImageOnLoading(R.drawable.ic_iiasa).build();
+
+            //download and display image from url
+            imageLoader.displayImage(maquinas.get(position).getLink(),holder.img, options);
+            //new ImageLoadTask(maquinas.get(position).getLink(), holder.img).execute(); VERSION ANTERIOR QUE DEMORABA
         }
 
 
@@ -125,11 +158,12 @@ public class CustomAdapter extends BaseAdapter {
     }
 
 }
+/* OLD METHOD
 class ImageLoadTask extends AsyncTask<Void, Void, Bitmap> {
 
     private String url;
     private ImageView imageView;
-
+    private static Bitmap final_image;
     public ImageLoadTask(String url, ImageView imageView) {
         this.url = url;
         this.imageView = imageView;
@@ -144,8 +178,10 @@ class ImageLoadTask extends AsyncTask<Void, Void, Bitmap> {
             connection.setDoInput(true);
             connection.connect();
             InputStream input = connection.getInputStream();
-            Bitmap myBitmap = BitmapFactory.decodeStream(input);
-            return myBitmap;
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inSampleSize = 2;
+            final_image= BitmapFactory.decodeStream(input,null,options);
+            return final_image;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -154,7 +190,9 @@ class ImageLoadTask extends AsyncTask<Void, Void, Bitmap> {
 
     @Override
     protected void onPreExecute() {
+
         super.onPreExecute();
+
     }
 
     @Override
@@ -162,4 +200,4 @@ class ImageLoadTask extends AsyncTask<Void, Void, Bitmap> {
         super.onPostExecute(bitmap);
         imageView.setImageBitmap(bitmap);
     }
-}
+} */

@@ -96,11 +96,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
 
                 if (res){
                     Toast.makeText(getApplicationContext(), "Acceso exitoso", Toast.LENGTH_LONG).show();
-                    ProgressDialog progreso=new ProgressDialog(this);
-                    progreso.setMessage("Descargando maquinas...");
-                    progreso.show();
                     new DownloadInfo(this,this).execute();
-                    progreso.dismiss();
                     Intent vintent=new Intent(MainActivity.this, MenuActivity.class);
                     Bundle b=new Bundle();
                     b.putBoolean("descargaInfo",false); //para pasar varios campos
@@ -222,7 +218,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
     @Override
     protected void onPostExecute(Boolean result) {
         super.onPostExecute(result);
-        dialog.dismiss();
+
         if (result) {
 
             SharedPreferences prefs = context.getSharedPreferences("loginUsuarios", Context.MODE_PRIVATE);
@@ -236,6 +232,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
             Log.i("MAIN LOGIN","HICE LOGIN Y GUARDE LAS PREFERENCIAS");
            // activity.startActivity(new Intent(activity, MenuActivity.class));
         }
+        dialog.dismiss();
     }
 }
 

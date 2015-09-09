@@ -77,11 +77,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         if (downloadInfo)
         {
             Log.i("MENU","ENTRE A DESCARGAR INFORMACION");
-            ProgressDialog progreso=new ProgressDialog(this);
-            progreso.setMessage("Descargando maquinas...");
-            progreso.show();
             new DownloadInfo(this,this).execute();
-            progreso.dismiss();
             //GUARDAR ULTIMA FECHA DE DESCARGA
             SharedPreferences prefs=getSharedPreferences("loginUsuarios", Context.MODE_PRIVATE);
             Calendar c = Calendar.getInstance();
@@ -187,17 +183,21 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         }
          if(id==R.id.action_search){
              try {
-                 Log.i("OBSERVACION","ANTES DE EJECUTAR OBTENER LISTADO X BUSQUEDA");
-                 listadoMaquinas=new ObtenerListado(this,this,"","","","","",txtBusquedaGeneral.getText().toString()).execute().get();
+                 if  (txtBusquedaGeneral.getText().length()>0)
+                 {
+                     Log.i("OBSERVACION","ANTES DE EJECUTAR OBTENER LISTADO X BUSQUEDA");
+                     listadoMaquinas=new ObtenerListado(this,this,"","","","","",txtBusquedaGeneral.getText().toString()).execute().get();
+                     Log.i("OBSERVACION","DESPUES DE EJECUTAR OBTENER LISTADO X BUSQUEDA");
+                     grid.setAdapter(new CustomAdapter(this, listadoMaquinas));
+
+                 }
 
              } catch (InterruptedException e) {
                  e.printStackTrace();
              } catch (ExecutionException e) {
                  e.printStackTrace();
              }
-             Log.i("OBSERVACION","DESPUES DE EJECUTAR OBTENER LISTADO X BUSQUEDA");
 
-             grid.setAdapter(new CustomAdapter(this, listadoMaquinas));
          }
         return super.onOptionsItemSelected(item);
     }
@@ -228,13 +228,13 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
                 try {
 
                     listadoMaquinas=new ObtenerListado(this,this,cmbOrden.getSelectedItem().toString(),cmbFamilias.getSelectedItem().toString(),txtModelo.getText().toString(),cmbRegion.getSelectedItem().toString(),cmbPrecio.getSelectedItem().toString(),txtBusquedaGeneral.getText().toString()).execute().get();
+                    grid.setAdapter(new CustomAdapter(this,listadoMaquinas));
 
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 }
-                grid.setAdapter(new CustomAdapter(this,listadoMaquinas));
 
                 break;
             }
