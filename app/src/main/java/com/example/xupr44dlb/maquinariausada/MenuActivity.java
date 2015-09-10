@@ -213,12 +213,15 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
                    filtrospadreLayout.setAnimation(anim);
                    filtrosLayout.setVisibility(View.VISIBLE);
                    filtrospadreLayout.setVisibility(View.VISIBLE);
+                   grid.setNumColumns(3);
 
                }
                 else
                {
                    filtrosLayout.setVisibility(View.GONE);
                    filtrospadreLayout.setVisibility(View.GONE);
+                   grid.setNumColumns(4);
+
                }
                 break;
             }

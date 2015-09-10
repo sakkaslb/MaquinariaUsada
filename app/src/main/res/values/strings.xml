@@ -27,7 +27,7 @@
     <string name="lblFamilia">Familia:</string>
     <string name="lblModelo">Modelo:</string>
     <string name="lblPrecio">Precio:</string>
-    <string name="lblRegion">Región:</string>
+    <string name="lblRegion">Ubicación:</string>
     <string name="lblUbicacion">Ubicación:</string>
     <string name="lblAnio">Año:</string>
     <string name="btnFiltrar">Filtrar</string>

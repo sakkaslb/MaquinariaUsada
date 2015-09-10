@@ -7,13 +7,18 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.Display;
@@ -26,11 +31,14 @@ import android.widget.Gallery;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
+import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
@@ -48,6 +56,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -192,86 +201,119 @@ public class DetalleMaquinaActivity extends Activity implements View.OnClickList
         switch (v.getId()){
             case R.id.btnCotizar:{
 
-                String nombre=txtFamilia.getText().toString().replace(" ","")+"_"+txtModelo.getText().toString().replace(" ","")+"_"+txtSerie.getText().toString().replace(" ","");
+                final String nombre=txtFamilia.getText().toString().replace(" ","")+"_"+txtModelo.getText().toString().replace(" ","")+"_"+txtSerie.getText().toString().replace(" ","");
                 Log.i("OJO","ENTRE A COTIZAR "+nombre);
                 try {
-                    createPdf(nombre);
+                    createPdf(nombre,this);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 } catch (DocumentException e) {
                     e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
+
+
                 break;
+
             }
         }
 
     }
-    private void createPdf(String nombre) throws FileNotFoundException, DocumentException{
 
-        File pdfFolder = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/maquinariausada");
-        if (!pdfFolder.exists()) {
-            pdfFolder.mkdirs();
-            Log.i("OJO", "Pdf Directory created");
-        }
-        File myFile = new File(pdfFolder+"/"+nombre+ ".pdf");
-        Font bfBold12 = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD, new BaseColor(0, 0, 0));
-        Font bf12 = new Font(Font.FontFamily.TIMES_ROMAN, 12);
-        FileOutputStream output = new FileOutputStream(myFile);
-        Document document = new Document();
-        DecimalFormat df=new DecimalFormat("0.00");
-        PdfWriter.getInstance(document, output);
+    private void createPdf(String pnombre,Activity activity) throws FileNotFoundException, DocumentException, InterruptedException {
+        final String nombre=pnombre;
+        final ProgressDialog ringProgressDialog = ProgressDialog.show(activity, "Por favor espere ...", "Descargando PDF ...", true);
+        ringProgressDialog.setCancelable(true);
+        Thread t=new Thread(new Runnable() {
+
+            @Override
+
+            public void run() {
+
+                try {
+                    File pdfFolder = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/maquinariausada");
+                    if (!pdfFolder.exists()) {
+                        pdfFolder.mkdirs();
+                        Log.i("OJO", "Pdf Directory created");
+                    }
+                    File myFile = new File(pdfFolder+"/"+nombre+ ".pdf");
+                    FileOutputStream output = new FileOutputStream(myFile);
+                    Document document = new Document();
+                    DecimalFormat df=new DecimalFormat("0.00");
+                    PdfWriter.getInstance(document, output);
+                    try {
+
+                        document.open();
+                        document.setPageSize(PageSize.A4);
+                        document.add(createFirstTable());
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    } finally {
+                        document.close();
+                    }
+
+                    try {
+                        output.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                } catch (Exception e) {
+                        e.printStackTrace();
+                }
+
+            }
+
+        });
+
+        t.start();
         try {
+            t.join();
+            ringProgressDialog.dismiss();
+            promptForNextAction(nombre);
 
-            document.open();
-            document.setPageSize(PageSize.A4);
-            document.add(new Paragraph("Cotización de Maquinaria Usada"));
-
-            float[] columnWidths={1.5f, 2f, 5f, 2f};
-            PdfPTable table=new PdfPTable(columnWidths);
-            table.setWidthPercentage(90f);
-
-            insertCell(table,"Atributo", Element.ALIGN_CENTER,1,bfBold12);
-            insertCell(table,"Descripción", Element.ALIGN_LEFT,1,bfBold12);
-            table.setHeaderRows(1);
-            Paragraph parrafo=new Paragraph("_");
-            parrafo.add(table);
-            document.add(parrafo);
-          /*  Drawable d = getResources().getDrawable(R.drawable.repuestos);
-            BitmapDrawable bitDw = ((BitmapDrawable) d);
-            Bitmap bmp = bitDw.getBitmap();
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bmp.compress(Bitmap.CompressFormat.PNG, 200, stream);
-            Image image = Image.getInstance(stream.toByteArray());
-            document.add(image);*/
-        } catch (Exception e) {
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
-                document.close();
-        try {
-            output.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        promptForNextAction(nombre);
-
 
     }
-    private void insertCell(PdfPTable table, String text, int align, int colspan, Font font){
 
-        //create a new cell with the specified Text and Font
-        PdfPCell cell = new PdfPCell(new Phrase(text.trim(), font));
-        //set the cell alignment
-        cell.setHorizontalAlignment(align);
-        //set the cell column span in case you want to merge two or more cells
-        cell.setColspan(colspan);
-        //in case there is no text and you wan to create an empty row
-        if(text.trim().equalsIgnoreCase("")){
-            cell.setMinimumHeight(10f);
-        }
-        //add the call to the table
+
+
+    public PdfPTable createFirstTable() throws BadElementException, IOException {
+        // a table with three columns
+        PdfPTable table = new PdfPTable(5);
+        // the cell object
+        PdfPCell cell;
+        // we add a cell with colspan 3
+        Font boldFont = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD);
+        cell = new PdfPCell(new Phrase("COTIZACIÓN DE MAQUINARIA USADA",boldFont));
+        cell.setColspan(3);
         table.addCell(cell);
-
+        //AGREGANDO IMAGEN DE LOGO
+        Drawable d = getResources().getDrawable(R.drawable.ic_iiasa);
+        BitmapDrawable bitDw = ((BitmapDrawable) d);
+        Bitmap bmp = bitDw.getBitmap();
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        Image image = Image.getInstance(stream.toByteArray());
+        cell = new PdfPCell(image);
+        cell.setColspan(2);
+        table.addCell(cell);
+        // now we add a cell with rowspan 2
+        cell = new PdfPCell(new Phrase("Cell with rowspan 2"));
+        cell.setRowspan(2);
+        table.addCell(cell);
+        // we add the four remaining cells with addCell()
+        table.addCell("row 1; cell 1");
+        table.addCell("row 1; cell 2");
+        table.addCell("row 2; cell 1");
+        table.addCell("row 2; cell 2");
+        return table;
     }
+
     public void viewPdf(String nombre){
         File pdfFolder = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/maquinariausada");
         File myFile = new File(pdfFolder+"/"+nombre+ ".pdf");
