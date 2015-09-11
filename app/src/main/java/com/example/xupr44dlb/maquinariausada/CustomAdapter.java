@@ -134,7 +134,7 @@ public class CustomAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                Toast.makeText(context, "Hiciste click en " + maquinas.get(position).getModelo(), Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "Hiciste click en " + maquinas.get(position).getModelo(), Toast.LENGTH_SHORT).show();
                 Intent vintent=new Intent(context,DetalleMaquinaActivity.class);
                 Bundle bundle=new Bundle();
                 bundle.putInt("id",maquinas.get(position).getId());

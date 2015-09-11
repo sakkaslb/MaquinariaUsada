@@ -58,7 +58,7 @@ public class ListadoArchivosActivity extends Activity {
     }
     public void viewPdf(String nombre){
         File pdfFolder = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/maquinariausada");
-        File myFile = new File(pdfFolder+"/"+nombre+ ".pdf");
+        File myFile = new File(pdfFolder+"/"+nombre);
 
         Intent target = new Intent(Intent.ACTION_VIEW);
 

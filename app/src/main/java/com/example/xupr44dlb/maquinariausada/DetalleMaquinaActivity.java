@@ -285,32 +285,94 @@ public class DetalleMaquinaActivity extends Activity implements View.OnClickList
     public PdfPTable createFirstTable() throws BadElementException, IOException {
         // a table with three columns
         PdfPTable table = new PdfPTable(5);
-        // the cell object
+        table.getDefaultCell().setBorder(0);
+       // the cell object
         PdfPCell cell;
         // we add a cell with colspan 3
         Font boldFont = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD);
         cell = new PdfPCell(new Phrase("COTIZACIÓN DE MAQUINARIA USADA",boldFont));
         cell.setColspan(3);
+        cell.setRowspan(2);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setBorder(0);
         table.addCell(cell);
         //AGREGANDO IMAGEN DE LOGO
         Drawable d = getResources().getDrawable(R.drawable.ic_iiasa);
         BitmapDrawable bitDw = ((BitmapDrawable) d);
         Bitmap bmp = bitDw.getBitmap();
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        bmp.compress(Bitmap.CompressFormat.PNG, 80, stream);
         Image image = Image.getInstance(stream.toByteArray());
+        image.scaleAbsolute(130,35);
         cell = new PdfPCell(image);
         cell.setColspan(2);
-        table.addCell(cell);
-        // now we add a cell with rowspan 2
-        cell = new PdfPCell(new Phrase("Cell with rowspan 2"));
         cell.setRowspan(2);
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        cell.setBorder(0);
         table.addCell(cell);
-        // we add the four remaining cells with addCell()
-        table.addCell("row 1; cell 1");
-        table.addCell("row 1; cell 2");
+        // FIN DE AGREGAR IMAGEN LOGO
+        table.addCell("    ");
+        table.addCell("    ");
+        table.addCell("    ");
+        table.addCell("    ");
+        table.addCell("    ");
+
+        //IMAGEN INICIAL DE LA MAQUINA
+        d=getResources().getDrawable(R.drawable.maquina);
+        bitDw = ((BitmapDrawable) d);
+        bmp = bitDw.getBitmap();
+        stream = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.PNG, 80, stream);
+        image = Image.getInstance(stream.toByteArray());
+        image.scaleAbsolute(230,210);
+        cell = new PdfPCell(image);
+        cell.setRowspan(10);
+        cell.setColspan(3);
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        cell.setBorder(0);
+        table.addCell(cell);
+
+        //DATOS PRINCIPALES
         table.addCell("row 2; cell 1");
         table.addCell("row 2; cell 2");
+        table.addCell("row 3; cell 1");
+        table.addCell("row 3; cell 2");
+        table.addCell("row 4; cell 1");
+        table.addCell("row 4; cell 2");
+        table.addCell("row 5; cell 1");
+        table.addCell("row 5; cell 2");
+        table.addCell("row 6; cell 1");
+        table.addCell("row 6; cell 2");
+        table.addCell("row 7; cell 1");
+        table.addCell("row 7; cell 2");
+        table.addCell("row 8; cell 1");
+        table.addCell("row 8; cell 2");
+        table.addCell("row 9; cell 1");
+        table.addCell("row 9; cell 2");
+        table.addCell("row 10; cell 1");
+        table.addCell("row 10; cell 2");
+        table.addCell("row 11; cell 1");
+        table.addCell("row 10; cell 2");
+
+
+        //AGREGAR FOOTER
+        Drawable f = getResources().getDrawable(R.drawable.repuestos);
+        BitmapDrawable bitDwf = ((BitmapDrawable) f);
+        Bitmap bmpf = bitDwf.getBitmap();
+        ByteArrayOutputStream streamf = new ByteArrayOutputStream();
+        bmpf.compress(Bitmap.CompressFormat.PNG, 80, streamf);
+        Image footer=Image.getInstance(streamf.toByteArray());
+        footer.scaleAbsolute(415,105);
+        cell = new PdfPCell(footer);
+        cell.setColspan(5);
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        cell.setBorder(0);
+        table.addCell(cell);
+
         return table;
     }
 
