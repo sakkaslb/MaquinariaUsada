@@ -83,6 +83,7 @@ public class DetalleMaquinaActivity extends Activity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setUpWindow();
         Bundle bundle =this.getIntent().getExtras();
+
         txtModelo=(TextView) findViewById(R.id.txtDetalleModelo);
         txtFamilia=(TextView) findViewById(R.id.txtDetalleFamilia);
         txtUbicacion=(TextView) findViewById(R.id.txtDetalleLocalizacion);
