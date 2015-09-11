@@ -63,8 +63,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
 
@@ -283,10 +287,10 @@ public class DetalleMaquinaActivity extends Activity implements View.OnClickList
 
 
     public PdfPTable createFirstTable() throws BadElementException, IOException {
-        // a table with three columns
+
         PdfPTable table = new PdfPTable(5);
-        table.getDefaultCell().setBorder(0);
-       // the cell object
+       // table.getDefaultCell().setBorder(0);
+
         PdfPCell cell;
         // we add a cell with colspan 3
         Font boldFont = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD);
@@ -336,14 +340,16 @@ public class DetalleMaquinaActivity extends Activity implements View.OnClickList
         table.addCell(cell);
 
         //DATOS PRINCIPALES
-        table.addCell("row 2; cell 1");
-        table.addCell("row 2; cell 2");
-        table.addCell("row 3; cell 1");
-        table.addCell("row 3; cell 2");
-        table.addCell("row 4; cell 1");
-        table.addCell("row 4; cell 2");
-        table.addCell("row 5; cell 1");
-        table.addCell("row 5; cell 2");
+        table.addCell("Fecha de emisión:");
+        DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+        String fecha= dateFormat.format(Calendar.getInstance().getTime());
+        table.addCell(fecha);
+        table.addCell("Validez:");
+        table.addCell("10 días");
+        table.addCell("       ");
+        table.addCell("       ");
+        table.addCell("       ");
+        table.addCell("       ");
         table.addCell("row 6; cell 1");
         table.addCell("row 6; cell 2");
         table.addCell("row 7; cell 1");
