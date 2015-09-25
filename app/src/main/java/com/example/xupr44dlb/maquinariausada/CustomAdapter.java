@@ -93,10 +93,11 @@ public class CustomAdapter extends BaseAdapter {
         holder.tv.setText(maquinas.get(position).getModelo()+" ");
         NumberFormat fmt = NumberFormat.getCurrencyInstance();
         final String precio=fmt.format(maquinas.get(position).getPrecioSin()).toString();
+
         holder.precio.setText(precio);
         String hora=String.valueOf(maquinas.get(position).getHoras());
         holder.horas.setText("Horas: "+hora);
-        holder.garantia.setText("Garantia: "+maquinas.get(position).getGarantia());
+        holder.garantia.setText("Garantia: "+maquinas.get(position).getGarantia().replace("null","N/A"));
 
         //NUEVA MANERA DE CARGAR IMAGENES
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
@@ -123,9 +124,8 @@ public class CustomAdapter extends BaseAdapter {
                     .showImageOnFail(R.drawable.ic_iiasa)
                     .showImageOnLoading(R.drawable.ic_iiasa).build();
 
-            //download and display image from url
             imageLoader.displayImage(maquinas.get(position).getLink(),holder.img, options);
-            //new ImageLoadTask(maquinas.get(position).getLink(), holder.img).execute(); VERSION ANTERIOR QUE DEMORABA
+
         }
 
 
@@ -148,7 +148,9 @@ public class CustomAdapter extends BaseAdapter {
                 bundle.putString("garantia",maquinas.get(position).getGarantia());
                 bundle.putString("anio",String.valueOf(maquinas.get(position).getAnio()));
                 bundle.putString("link", maquinas.get(position).getLink());
+                bundle.putFloat("preciolista", maquinas.get(position).getPrecioSin());
                 vintent.putExtras(bundle);
+
                 context.startActivity(vintent);
 
             }
@@ -158,46 +160,3 @@ public class CustomAdapter extends BaseAdapter {
     }
 
 }
-/* OLD METHOD
-class ImageLoadTask extends AsyncTask<Void, Void, Bitmap> {
-
-    private String url;
-    private ImageView imageView;
-    private static Bitmap final_image;
-    public ImageLoadTask(String url, ImageView imageView) {
-        this.url = url;
-        this.imageView = imageView;
-    }
-
-    @Override
-    protected Bitmap doInBackground(Void... params) {
-        try {
-            URL urlConnection = new URL(url);
-            HttpURLConnection connection = (HttpURLConnection) urlConnection
-                    .openConnection();
-            connection.setDoInput(true);
-            connection.connect();
-            InputStream input = connection.getInputStream();
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inSampleSize = 2;
-            final_image= BitmapFactory.decodeStream(input,null,options);
-            return final_image;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    @Override
-    protected void onPreExecute() {
-
-        super.onPreExecute();
-
-    }
-
-    @Override
-    protected void onPostExecute(Bitmap bitmap) {
-        super.onPostExecute(bitmap);
-        imageView.setImageBitmap(bitmap);
-    }
-} */

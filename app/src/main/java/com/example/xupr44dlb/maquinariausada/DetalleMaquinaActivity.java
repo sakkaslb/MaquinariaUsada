@@ -38,6 +38,7 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
@@ -63,8 +64,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -78,6 +81,8 @@ public class DetalleMaquinaActivity extends Activity implements View.OnClickList
     private LinearLayout mDotsLayout;
     TextView txtPrecio, txtFamilia, txtModelo, txtUbicacion, txtDescripcion, txtSerie, txtAnio, txtHoras, txtGarantia,txtDetalleHeader;
     Button btnCotizar;
+    ArrayList<Imagen> imagenes;
+    Maquina maquina;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -107,15 +112,26 @@ public class DetalleMaquinaActivity extends Activity implements View.OnClickList
         }
         txtAnio.setText(bundle.getString("anio"));
         txtHoras.setText(bundle.getString("horas"));
-        txtGarantia.setText(bundle.getString("garantia"));
+        txtGarantia.setText(bundle.getString("garantia").replace("null", "N/A"));
         txtPrecio.setText(bundle.getString("precio"));
         txtDetalleHeader.setText(bundle.getString("familia")+" - "+bundle.getString("modelo"));
+
+        maquina=new Maquina();
+        maquina.setT_anio(bundle.getString("anio"));
+        maquina.setT_horas(bundle.getString("horas"));
+        maquina.setModelo(bundle.getString("modelo"));
+        maquina.setFamilia(bundle.getString("familia"));
+        maquina.setDescripcion(bundle.getString("descripcion"));
+        maquina.setT_precio(bundle.getString("precio"));
+        maquina.setSerie(bundle.getString("serie"));
+        maquina.setPreciocredito(bundle.getFloat("preciolista"));
 
         btnCotizar=(Button) findViewById(R.id.btnCotizar);
         btnCotizar.setOnClickListener(this);
 
         //METODO PARA DESCARGAR LA IMAGEN DE HTTP
-        ArrayList<Imagen> imagenes=new ArrayList<Imagen>();
+
+        imagenes=new ArrayList<Imagen>();
         try {
             imagenes=new DownloadImages(this,this,bundle.getInt("id")).execute().get();
         } catch (InterruptedException e) {
@@ -209,7 +225,7 @@ public class DetalleMaquinaActivity extends Activity implements View.OnClickList
                 final String nombre=txtFamilia.getText().toString().replace(" ","")+"_"+txtModelo.getText().toString().replace(" ","")+"_"+txtSerie.getText().toString().replace(" ","");
                 Log.i("OJO","ENTRE A COTIZAR "+nombre);
                 try {
-                    createPdf(nombre,this);
+                    createPdf(nombre,this, imagenes, maquina);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 } catch (DocumentException e) {
@@ -226,9 +242,10 @@ public class DetalleMaquinaActivity extends Activity implements View.OnClickList
 
     }
 
-    private void createPdf(String pnombre,Activity activity) throws FileNotFoundException, DocumentException, InterruptedException {
+    private void createPdf(String pnombre,Activity activity, ArrayList<Imagen> imagenes, final Maquina maquina) throws FileNotFoundException, DocumentException, InterruptedException {
         final String nombre=pnombre;
         final ProgressDialog ringProgressDialog = ProgressDialog.show(activity, "Por favor espere ...", "Descargando PDF ...", true);
+        final ArrayList<Imagen> listadoImagenes=imagenes;
         ringProgressDialog.setCancelable(true);
         Thread t=new Thread(new Runnable() {
 
@@ -251,7 +268,7 @@ public class DetalleMaquinaActivity extends Activity implements View.OnClickList
 
                         document.open();
                         document.setPageSize(PageSize.A4);
-                        document.add(createFirstTable());
+                        document.add(createFirstTable(listadoImagenes, maquina));
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -287,10 +304,14 @@ public class DetalleMaquinaActivity extends Activity implements View.OnClickList
 
 
 
-    public PdfPTable createFirstTable() throws BadElementException, IOException {
+    public PdfPTable createFirstTable(ArrayList<Imagen> imagenes, Maquina maquina) throws BadElementException, IOException {
 
         PdfPTable table = new PdfPTable(5);
-       // table.getDefaultCell().setBorder(0);
+        table.setWidthPercentage(90);
+        table.setSpacingBefore(0f);
+        table.setSpacingAfter(0f);
+
+        // table.getDefaultCell().setBorder(0);
 
         PdfPCell cell;
         // we add a cell with colspan 3
@@ -323,17 +344,25 @@ public class DetalleMaquinaActivity extends Activity implements View.OnClickList
         table.addCell("    ");
         table.addCell("    ");
         table.addCell("    ");
+         if (imagenes.size()<=0) {
+             //IMAGEN INICIAL DE LA MAQUINA
+             d = getResources().getDrawable(R.drawable.maquinanoencontrada);
+             bitDw = ((BitmapDrawable) d);
+             bmp = bitDw.getBitmap();
+             stream = new ByteArrayOutputStream();
+             bmp.compress(Bitmap.CompressFormat.PNG, 80, stream);
+             image = Image.getInstance(stream.toByteArray());
 
-        //IMAGEN INICIAL DE LA MAQUINA
-        d=getResources().getDrawable(R.drawable.maquina);
-        bitDw = ((BitmapDrawable) d);
-        bmp = bitDw.getBitmap();
-        stream = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.PNG, 80, stream);
-        image = Image.getInstance(stream.toByteArray());
-        image.scaleAbsolute(230,210);
+         }
+          else {
+             String imageUrl = imagenes.get(0).getUrl().toString();
+             Log.i("IMAGEN PDF",imageUrl);
+             image = Image.getInstance(new URL(imageUrl));
+
+         }
+        image.scaleAbsolute(250, 210);
         cell = new PdfPCell(image);
-        cell.setRowspan(10);
+        cell.setRowspan(14);
         cell.setColspan(3);
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -341,29 +370,115 @@ public class DetalleMaquinaActivity extends Activity implements View.OnClickList
         table.addCell(cell);
 
         //DATOS PRINCIPALES
-        table.addCell("Fecha de emisión:");
+        Font fontbold = FontFactory.getFont("Times-Roman", 10, Font.BOLD);
+        table.addCell(new Paragraph("Fecha de emisión:",fontbold));
         DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
         String fecha= dateFormat.format(Calendar.getInstance().getTime());
         table.addCell(fecha);
-        table.addCell("Validez:");
+        table.addCell(new Paragraph("Validez:",fontbold));
         table.addCell("10 días");
         table.addCell("       ");
         table.addCell("       ");
-        table.addCell("       ");
-        table.addCell("       ");
-        table.addCell("row 6; cell 1");
-        table.addCell("row 6; cell 2");
-        table.addCell("row 7; cell 1");
-        table.addCell("row 7; cell 2");
-        table.addCell("row 8; cell 1");
-        table.addCell("row 8; cell 2");
-        table.addCell("row 9; cell 1");
-        table.addCell("row 9; cell 2");
-        table.addCell("row 10; cell 1");
-        table.addCell("row 10; cell 2");
-        table.addCell("row 11; cell 1");
-        table.addCell("row 10; cell 2");
 
+        Font fontheader = FontFactory.getFont("Times-Roman", 14, Font.BOLD);
+        cell = new PdfPCell(new Paragraph("Especificaciones del Equipo", fontheader));
+        cell.setColspan(2);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(cell);
+        table.addCell("  ");
+        table.addCell("  ");
+        table.addCell(new Paragraph("Familia:",fontbold));
+        table.addCell(maquina.getFamilia());
+        table.addCell(new Paragraph("Modelo:",fontbold));
+        table.addCell(maquina.getModelo());
+        table.addCell(new Paragraph("No. Serie:",fontbold));
+        table.addCell(maquina.getSerie());
+        table.addCell(new Paragraph("Año:",fontbold));
+        table.addCell(maquina.getT_anio());
+        table.addCell(new Paragraph("Horas:",fontbold));
+        table.addCell(maquina.getT_horas());
+        table.addCell("   ");
+        table.addCell("   ");
+
+
+            cell=new PdfPCell(new Paragraph("Descripción del Equipo",fontheader));
+            cell.setColspan(2);
+            table.addCell(cell);
+            table.addCell("       ");
+            table.addCell("       ");
+            cell=new PdfPCell(new Paragraph(maquina.getDescripcion().replace("null","No hay información disponible")));
+            cell.setColspan(2);
+            table.addCell(cell);
+
+
+
+        cell=new PdfPCell(new Paragraph("  "));
+        cell.setColspan(5);
+        table.addCell(cell);
+
+        //PRECIO
+        cell=new PdfPCell(new Paragraph("Precio Unitario de Venta en Almacén",fontbold));
+        cell.setColspan(2);
+        cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+        table.addCell(cell);
+        Font fontprecio=FontFactory.getFont("Times-Roman", 16, Font.ITALIC);
+        cell=new PdfPCell(new Paragraph(maquina.getT_precio(),fontprecio));
+        cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+        table.addCell(cell);
+        table.addCell("   ");
+        table.addCell("   ");
+
+        //IVA
+        cell=new PdfPCell(new Paragraph("12% IVA",fontbold));
+        cell.setColspan(2);
+        cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+        table.addCell(cell);
+        NumberFormat fmt = NumberFormat.getCurrencyInstance();
+        String iva=fmt.format(maquina.getPreciocredito()*0.12).toString();
+        cell=new PdfPCell(new Paragraph(iva,fontprecio));
+        cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+        table.addCell(cell);
+        table.addCell("   ");
+        table.addCell("   ");
+
+
+        //TOTAL MAS IVA
+        cell=new PdfPCell(new Paragraph("Precio total incluido IVA",fontbold));
+        cell.setColspan(2);
+        cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+        table.addCell(cell);
+        String totaliva=fmt.format(maquina.getPreciocredito()*1.12).toString();
+        cell=new PdfPCell(new Paragraph(totaliva,fontprecio));
+        cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+        table.addCell(cell);
+        table.addCell("  ");
+        table.addCell("  ");
+
+        cell=new PdfPCell(new Paragraph("Nota: Precio unitario basado en la compra de UNA máquina.",fontbold));
+        cell.setColspan(5);
+        table.addCell(cell);
+
+        cell=new PdfPCell(new Paragraph("“Los precios, especificaciones y disponibilidad están sujetos a cambio sin previo aviso. Además estos precios no incluyen: seguros y transporte o cualquier variación que hubiere el Impuesto al Valor Agregado y/o tributos al comercio exterior.“",fontbold));
+        cell.setColspan(5);
+        table.addCell(cell);
+
+        cell=new PdfPCell(new Paragraph("Plazo de Entrega",fontbold));
+        cell.setColspan(2);
+        table.addCell(cell);
+        table.addCell("Inmediata");
+        table.addCell("  ");
+        table.addCell("  ");
+
+        cell=new PdfPCell(new Paragraph("Forma de Pago",fontbold));
+        cell.setColspan(2);
+        table.addCell(cell);
+        table.addCell("Contado");
+        table.addCell("  ");
+        table.addCell("  ");
+
+        cell=new PdfPCell(new Paragraph("Esta cotización está sujeta al artículo No. 148 del Código de Comercio.",fontbold));
+        cell.setColspan(5);
+        table.addCell(cell);
 
         //AGREGAR FOOTER
         Drawable f = getResources().getDrawable(R.drawable.repuestos);
@@ -372,7 +487,7 @@ public class DetalleMaquinaActivity extends Activity implements View.OnClickList
         ByteArrayOutputStream streamf = new ByteArrayOutputStream();
         bmpf.compress(Bitmap.CompressFormat.PNG, 80, streamf);
         Image footer=Image.getInstance(streamf.toByteArray());
-        footer.scaleAbsolute(415,105);
+        footer.scaleAbsolute(445,115);
         cell = new PdfPCell(footer);
         cell.setColspan(5);
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);

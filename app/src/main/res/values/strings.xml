@@ -104,6 +104,7 @@
     <string name="label_email">Enviar por email</string>
     <string name="label_preview">Vista previa</string>
     <string name="label_cancel">Cancelar</string>
+    <string name="label_iva">12% IVA</string>
 
 </resources>
 
