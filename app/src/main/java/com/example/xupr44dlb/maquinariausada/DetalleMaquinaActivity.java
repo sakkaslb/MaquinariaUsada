@@ -269,6 +269,11 @@ public class DetalleMaquinaActivity extends Activity implements View.OnClickList
                         document.open();
                         document.setPageSize(PageSize.A4);
                         document.add(createFirstTable(listadoImagenes, maquina));
+                        if (listadoImagenes.size()>1)
+                        {
+                            document.add(createImageTable(listadoImagenes));
+                        }
+
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -311,7 +316,7 @@ public class DetalleMaquinaActivity extends Activity implements View.OnClickList
         table.setSpacingBefore(0f);
         table.setSpacingAfter(0f);
 
-        // table.getDefaultCell().setBorder(0);
+        table.getDefaultCell().setBorder(0);
 
         PdfPCell cell;
         // we add a cell with colspan 3
@@ -384,6 +389,7 @@ public class DetalleMaquinaActivity extends Activity implements View.OnClickList
         cell = new PdfPCell(new Paragraph("Especificaciones del Equipo", fontheader));
         cell.setColspan(2);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        cell.setBorder(0);
         table.addCell(cell);
         table.addCell("  ");
         table.addCell("  ");
@@ -403,17 +409,20 @@ public class DetalleMaquinaActivity extends Activity implements View.OnClickList
 
             cell=new PdfPCell(new Paragraph("Descripción del Equipo",fontheader));
             cell.setColspan(2);
+            cell.setBorder(0);
             table.addCell(cell);
             table.addCell("       ");
             table.addCell("       ");
             cell=new PdfPCell(new Paragraph(maquina.getDescripcion().replace("null","No hay información disponible")));
             cell.setColspan(2);
+            cell.setBorder(0);
             table.addCell(cell);
 
 
 
         cell=new PdfPCell(new Paragraph("  "));
         cell.setColspan(5);
+        cell.setBorder(0);
         table.addCell(cell);
 
         //PRECIO
@@ -454,16 +463,34 @@ public class DetalleMaquinaActivity extends Activity implements View.OnClickList
         table.addCell("  ");
         table.addCell("  ");
 
+        cell=new PdfPCell(new Paragraph("   "));
+        cell.setColspan(5);
+        cell.setBorder(0);
+        table.addCell(cell);
+
         cell=new PdfPCell(new Paragraph("Nota: Precio unitario basado en la compra de UNA máquina.",fontbold));
         cell.setColspan(5);
+        cell.setBorder(0);
+        table.addCell(cell);
+
+        cell=new PdfPCell(new Paragraph("   "));
+        cell.setColspan(5);
+        cell.setBorder(0);
         table.addCell(cell);
 
         cell=new PdfPCell(new Paragraph("“Los precios, especificaciones y disponibilidad están sujetos a cambio sin previo aviso. Además estos precios no incluyen: seguros y transporte o cualquier variación que hubiere el Impuesto al Valor Agregado y/o tributos al comercio exterior.“",fontbold));
         cell.setColspan(5);
+        cell.setBorder(0);
+        table.addCell(cell);
+
+        cell=new PdfPCell(new Paragraph("   "));
+        cell.setColspan(5);
+        cell.setBorder(0);
         table.addCell(cell);
 
         cell=new PdfPCell(new Paragraph("Plazo de Entrega",fontbold));
         cell.setColspan(2);
+        cell.setBorder(0);
         table.addCell(cell);
         table.addCell("Inmediata");
         table.addCell("  ");
@@ -471,14 +498,41 @@ public class DetalleMaquinaActivity extends Activity implements View.OnClickList
 
         cell=new PdfPCell(new Paragraph("Forma de Pago",fontbold));
         cell.setColspan(2);
+        cell.setBorder(0);
         table.addCell(cell);
         table.addCell("Contado");
         table.addCell("  ");
         table.addCell("  ");
 
+        cell=new PdfPCell(new Paragraph("   "));
+        cell.setColspan(5);
+        cell.setBorder(0);
+        table.addCell(cell);
+
+        cell=new PdfPCell(new Paragraph("   "));
+        cell.setColspan(5);
+        cell.setBorder(0);
+        table.addCell(cell);
+
         cell=new PdfPCell(new Paragraph("Esta cotización está sujeta al artículo No. 148 del Código de Comercio.",fontbold));
         cell.setColspan(5);
+        cell.setBorder(0);
         table.addCell(cell);
+
+        cell=new PdfPCell(new Paragraph("   "));
+        cell.setColspan(5);
+        cell.setBorder(0);
+        table.addCell(cell);
+        cell=new PdfPCell(new Paragraph("   "));
+        cell.setColspan(5);
+        cell.setBorder(0);
+        table.addCell(cell);
+        cell=new PdfPCell(new Paragraph("   "));
+        cell.setColspan(5);
+        cell.setBorder(0);
+        table.addCell(cell);
+
+
 
         //AGREGAR FOOTER
         Drawable f = getResources().getDrawable(R.drawable.repuestos);
@@ -494,6 +548,82 @@ public class DetalleMaquinaActivity extends Activity implements View.OnClickList
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setBorder(0);
         table.addCell(cell);
+
+        cell=new PdfPCell(new Paragraph("   "));
+        cell.setColspan(5);
+        cell.setBorder(0);
+        table.addCell(cell);
+
+        return table;
+    }
+    public PdfPTable createImageTable (ArrayList<Imagen> imagenes) throws BadElementException, IOException {
+
+        PdfPTable table = new PdfPTable(6);
+        table.setWidthPercentage(90);
+        table.setSpacingBefore(0f);
+        table.setSpacingAfter(0f);
+        PdfPCell cell;
+        // AÑADIR TITULO
+        Font boldFont = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD);
+        cell = new PdfPCell(new Phrase("Imágenes adicionales del Equipo",boldFont));
+        cell.setColspan(4);
+        cell.setRowspan(2);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setBorder(0);
+        table.addCell(cell);
+        //AGREGANDO IMAGEN DE LOGO
+        Drawable d = getResources().getDrawable(R.drawable.ic_iiasa);
+        BitmapDrawable bitDw = ((BitmapDrawable) d);
+        Bitmap bmp = bitDw.getBitmap();
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.PNG, 80, stream);
+        Image image = Image.getInstance(stream.toByteArray());
+        image.scaleAbsolute(130,35);
+        cell = new PdfPCell(image);
+        cell.setColspan(2);
+        cell.setRowspan(2);
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        cell.setBorder(0);
+        table.addCell(cell);
+
+
+        cell=new PdfPCell(new Paragraph("   "));
+        cell.setColspan(6);
+        cell.setBorder(0);
+        table.addCell(cell);
+
+
+        cell=new PdfPCell(new Paragraph("   "));
+        cell.setColspan(6);
+        cell.setBorder(0);
+        table.addCell(cell);
+
+
+        if (imagenes.size()>0) {
+
+            int h=imagenes.size();
+            if (h>6) {
+                h=6;
+            }
+            for (int i=1; i<h ;i++)
+            {
+                String imageUrl = imagenes.get(i).getUrl().toString();
+                image = Image.getInstance(new URL(imageUrl));
+                image.scaleAbsolute(250, 210);
+                cell = new PdfPCell(image);
+                cell.setRowspan(14);
+                cell.setColspan(3);
+                cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                cell.setBorder(0);
+                table.addCell(cell);
+
+
+            }
+
+        }
 
         return table;
     }
