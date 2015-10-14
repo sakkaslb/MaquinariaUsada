@@ -42,6 +42,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.ExecutionException;
 
 
 public class MainActivity extends Activity implements View.OnClickListener{
@@ -90,11 +91,20 @@ public class MainActivity extends Activity implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btnLogin:{
-                new Login(this,this,txtUsuario.getText().toString(),txtContrasena.getText().toString()).execute();
-                SharedPreferences prefs=getSharedPreferences("loginUsuarios", Context.MODE_PRIVATE);
-                Boolean res=prefs.getBoolean("session",false);
+                Boolean resultado=false;
+                try {
+                    resultado=new Login(this,this,txtUsuario.getText().toString(),txtContrasena.getText().toString()).execute().get();
+                } catch (InterruptedException e) {
+                    Log.e("ERROR LOGIN","ERROR EN TODO");
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                    Log.e("ERROR LOGIN","ERROR EN TODO PARTE 2");
+                }
+                  SharedPreferences prefs=getSharedPreferences("loginUsuarios", Context.MODE_PRIVATE);
+               // Boolean res=prefs.getBoolean("session",false);
 
-                if (res){
+                if (resultado){
                     Toast.makeText(getApplicationContext(), "Acceso exitoso", Toast.LENGTH_LONG).show();
                     new DownloadInfo(this,this).execute();
                     Intent vintent=new Intent(MainActivity.this, MenuActivity.class);
@@ -110,7 +120,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
 
                     startActivity(vintent);
 
-                }else Toast.makeText(getApplicationContext(), "Acceso fallido", Toast.LENGTH_LONG).show();
+                }else Toast.makeText(getApplicationContext(), resultado.toString(), Toast.LENGTH_LONG).show();
 
                 break;
             }
@@ -144,7 +154,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
     @Override
     protected Boolean doInBackground(Void... params) {
 
-            URL+=username+"&pass="+password+"";
+            URL+=username+"&pass="+password.replace(" ","")+"";
             StringBuilder builder = new StringBuilder();
             HttpClient client = new DefaultHttpClient();
             HttpGet httpGet = new HttpGet(URL);
@@ -210,6 +220,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
     protected void onPreExecute() {
         super.onPreExecute();
         dialog.setMessage("Procesando");
+        dialog.setCancelable(false);
         dialog.show();
 
 
@@ -230,7 +241,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
             editor.putBoolean("session", true);
             editor.commit();
             Log.i("MAIN LOGIN","HICE LOGIN Y GUARDE LAS PREFERENCIAS");
-           // activity.startActivity(new Intent(activity, MenuActivity.class));
+            //activity.startActivity(new Intent(activity, MenuActivity.class));
         }
         dialog.dismiss();
     }
@@ -425,7 +436,7 @@ class ValidateData extends AsyncTask<Void, Integer, Boolean>
 
     @Override
     protected Boolean doInBackground(Void... params) {
-        Log.i("VALIDATE DATA","INICIE DO IN BACKGROUND");
+       // Log.i("VALIDATE DATA","INICIE DO IN BACKGROUND");
         USQLiteHelper usuario=new USQLiteHelper(context,"DBUsada",null,1);
         SQLiteDatabase db=usuario.getWritableDatabase();
         Cursor c=db.rawQuery("SELECT id from Maquinaria where id="+id.toString(),null);
@@ -434,7 +445,7 @@ class ValidateData extends AsyncTask<Void, Integer, Boolean>
             result=false;
         }
         if (c.moveToFirst()){
-            Log.i("VALIDATE DATA","ENTRE A MOVE TO FIRST");
+           // Log.i("VALIDATE DATA","ENTRE A MOVE TO FIRST");
             this.id=c.getInt(c.getColumnIndex("id"));
             try{
                 db.delete("Maquinaria","id="+id.toString(),null);

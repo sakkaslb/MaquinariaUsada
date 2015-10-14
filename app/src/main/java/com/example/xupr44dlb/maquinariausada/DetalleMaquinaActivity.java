@@ -747,7 +747,13 @@ class DownloadImages extends AsyncTask<Void, Integer, ArrayList<Imagen>>
         }
         Log.i("OJO",builder.toString());
         String json=builder.toString();
-        if (json.contains("No hay datos para mostrar")){ Log.i("ERROR","NO HAY IMAGENES");}
+        if (json.contains("No hay datos para mostrar"))
+        {
+            Imagen imagen=new Imagen();
+            imagen.setId(1);
+            imagen.setUrl("http://www.iiasanews.com/MaquinariaUsada/nodisponible.jpg");
+            imagens.add(imagen);
+        }
         else{
             try {
                 JSONObject jsonRootObject=new JSONObject(json);

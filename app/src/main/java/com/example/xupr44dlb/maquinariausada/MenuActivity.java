@@ -150,7 +150,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
 
         grid.setAdapter(new CustomAdapter(this,listadoMaquinas));
 
-       // grid.setAdapter(new CustomAdapter(this,prgmNameList,prgmImages));
+
     }
 
     @Override
@@ -179,6 +179,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
             Toast.makeText(getApplicationContext(), "Cerrando sesión", Toast.LENGTH_SHORT).show();
             Intent i=new Intent(this, MainActivity.class);
             startActivity(i);
+            this.finish();
             return true;
         }
         if(id==R.id.action_vercotizaciones){
