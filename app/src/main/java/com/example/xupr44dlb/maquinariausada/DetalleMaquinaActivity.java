@@ -28,6 +28,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Gallery;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -83,14 +84,15 @@ public class DetalleMaquinaActivity extends Activity implements View.OnClickList
     Button btnCotizar;
     ArrayList<Imagen> imagenes;
     Maquina maquina;
-
+    ImageButton btnClose;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setUpWindow();
-
         Bundle bundle =this.getIntent().getExtras();
 
+        btnClose=(ImageButton) findViewById(R.id.barra_btnClose);
+        btnClose.setOnClickListener(this);
         txtModelo=(TextView) findViewById(R.id.txtDetalleModelo);
         txtFamilia=(TextView) findViewById(R.id.txtDetalleFamilia);
         txtUbicacion=(TextView) findViewById(R.id.txtDetalleLocalizacion);
@@ -191,7 +193,6 @@ public class DetalleMaquinaActivity extends Activity implements View.OnClickList
         requestWindowFeature(Window.FEATURE_ACTION_BAR);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_detallemaquina);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND,
                 WindowManager.LayoutParams.FLAG_DIM_BEHIND);
 
@@ -233,6 +234,10 @@ public class DetalleMaquinaActivity extends Activity implements View.OnClickList
                 } catch (Exception e){
                     e.printStackTrace();
                 }
+                break;
+            }
+            case R.id.barra_btnClose:{
+                this.finish();
                 break;
             }
         }

@@ -189,6 +189,14 @@
                         android:layout_marginTop="@dimen/size2"
                         android:background="@android:color/darker_gray" />
 
+                    <Button
+                        android:id="@+id/btnBorrarFiltros"
+                        style="@style/button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/btnBorrarFiltros" />
+
                 </LinearLayout>
             </ScrollView>
 

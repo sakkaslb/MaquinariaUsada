@@ -36,7 +36,7 @@ import java.util.concurrent.ExecutionException;
 
 public class MenuActivity extends AppCompatActivity implements View.OnClickListener, AdapterViewCompat.OnItemSelectedListener{
     private Toolbar toolbar;
-    Button btnFiltrar;
+    Button btnFiltrar, btnBorrarFiltros;
     ToggleButton btnVerFiltros;
     Spinner cmbFamilias, cmbOrden, cmbPrecio, cmbRegion;
     EditText txtModelo, txtBusquedaGeneral;
@@ -92,9 +92,13 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         btnVerFiltros=(ToggleButton) findViewById(R.id.btnVerFiltros);
         btnVerFiltros.setOnClickListener(this);
 
+
         btnFiltrar=(Button) findViewById(R.id.btnFiltrar);
         btnFiltrar.setOnClickListener(this);
 
+
+        btnBorrarFiltros=(Button)findViewById(R.id.btnBorrarFiltros);
+        btnBorrarFiltros.setOnClickListener(this);
         //LAYOUT
 
         filtrosLayout=(LinearLayout) findViewById(R.id.LayoutFiltros);
@@ -190,6 +194,18 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
                      Log.i("OBSERVACION","DESPUES DE EJECUTAR OBTENER LISTADO X BUSQUEDA");
                      grid.setAdapter(new CustomAdapter(this, listadoMaquinas));
 
+                 } else
+                 {
+                     try {
+
+                         listadoMaquinas=new ObtenerListado(this,this,cmbOrden.getSelectedItem().toString(),cmbFamilias.getSelectedItem().toString(),txtModelo.getText().toString(),cmbRegion.getSelectedItem().toString(),cmbPrecio.getSelectedItem().toString(),txtBusquedaGeneral.getText().toString()).execute().get();
+                         grid.setAdapter(new CustomAdapter(this,listadoMaquinas));
+
+                     } catch (InterruptedException e) {
+                         e.printStackTrace();
+                     } catch (ExecutionException e) {
+                         e.printStackTrace();
+                     }
                  }
 
              } catch (InterruptedException e) {
@@ -239,6 +255,25 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
                     e.printStackTrace();
                 }
 
+                break;
+            }
+
+            case R.id.btnBorrarFiltros:{
+                cmbFamilias.setSelection(0);
+                cmbOrden.setSelection(0);
+                cmbPrecio.setSelection(0);
+                cmbRegion.setSelection(0);
+                txtModelo.setText("");
+                try {
+
+                    listadoMaquinas=new ObtenerListado(this,this,cmbOrden.getSelectedItem().toString(),cmbFamilias.getSelectedItem().toString(),txtModelo.getText().toString(),cmbRegion.getSelectedItem().toString(),cmbPrecio.getSelectedItem().toString(),txtBusquedaGeneral.getText().toString()).execute().get();
+                    grid.setAdapter(new CustomAdapter(this,listadoMaquinas));
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
                 break;
             }
 

@@ -31,6 +31,7 @@
     <string name="lblUbicacion">Ubicación:</string>
     <string name="lblAnio">Año:</string>
     <string name="btnFiltrar">Filtrar</string>
+    <string name="btnBorrarFiltros">Borrar filtros</string>
     <string name="lblVerPromos">Ver promociones</string>
     <string name="lblVerFiltros">Ver filtros de búsqueda</string>
     <string name="lblEquipos">.</string>

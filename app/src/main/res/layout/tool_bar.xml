@@ -1,24 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="wrap_content"  android:background="@color/ColorPrimary" android:elevation="4dp">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/ColorPrimary"
+    android:elevation="4dp"
+    android:focusableInTouchMode="true">
+
     <ImageView
+        android:id="@+id/iiasa_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_iiasa"
-        android:id="@+id/iiasa_logo"/>
+        android:src="@drawable/ic_iiasa" />
+
     <TextView
+        android:id="@+id/toolbar_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
         android:text="@string/app_name"
-        android:id="@+id/toolbar_title"
         android:textColor="@color/ColorSecondaryDark"
         android:textSize="@dimen/abc_text_size_large_material" />
+
     <EditText
         android:id="@+id/txtBusquedaGeneral"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/size3"
         android:layout_marginRight="@dimen/size5"
-        android:hint="@string/BusquedaGeneral"/>
+        android:hint="@string/BusquedaGeneral" />
 </android.support.v7.widget.Toolbar>
