@@ -127,7 +127,7 @@ public class DetalleMaquinaActivity extends Activity implements View.OnClickList
         maquina.setFamilia(bundle.getString("familia"));
         maquina.setDescripcion(bundle.getString("descripcion"));
         maquina.setT_precio(bundle.getString("precio"));
-        maquina.setSerie(bundle.getString("serie"));
+        maquina.setSerie(txtSerie.getText().toString());
         maquina.setPreciocredito(bundle.getFloat("preciolista"));
 
         btnCotizar=(Button) findViewById(R.id.btnCotizar);
@@ -254,7 +254,7 @@ class DownloadPDF extends AsyncTask<Void, Integer, Integer>
     ProgressDialog dialog;
     Context context;
 
-    public DownloadPDF(Context pcontext, String pnombre,Activity pactivity, ArrayList<Imagen> pimagenes, final Maquina pmaquina) {
+    public DownloadPDF(Context pcontext, String pnombre,Activity pactivity, ArrayList<Imagen> pimagenes,  Maquina pmaquina) {
         this.nombre=pnombre;
         this.activity=pactivity;
         this.imagenes=pimagenes;

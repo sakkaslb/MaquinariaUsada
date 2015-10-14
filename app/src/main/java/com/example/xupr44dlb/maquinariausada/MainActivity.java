@@ -119,6 +119,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
                     editor.commit();
 
                     startActivity(vintent);
+                    this.finish();
 
                 }else Toast.makeText(getApplicationContext(), resultado.toString(), Toast.LENGTH_LONG).show();
 
