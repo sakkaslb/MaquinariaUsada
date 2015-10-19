@@ -404,6 +404,7 @@ class DownloadPDF extends AsyncTask<Void, Integer, Integer>
         table.addCell("       ");
 
         Font fontheader = FontFactory.getFont("Times-Roman", 14, Font.BOLD);
+        Font fontdetallesgrandes = FontFactory.getFont("Times-Roman", 9);
         cell = new PdfPCell(new Paragraph("Especificaciones del Equipo", fontheader));
         cell.setColspan(2);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -412,15 +413,17 @@ class DownloadPDF extends AsyncTask<Void, Integer, Integer>
         table.addCell("  ");
         table.addCell("  ");
         table.addCell(new Paragraph("Familia:",fontbold));
-        table.addCell(maquina.getFamilia());
+        table.addCell(new Paragraph(maquina.getFamilia(),fontdetallesgrandes));
+
         table.addCell(new Paragraph("Modelo:",fontbold));
-        table.addCell(maquina.getModelo());
+        table.addCell(new Paragraph(maquina.getModelo(),fontdetallesgrandes));
         table.addCell(new Paragraph("No. Serie:",fontbold));
-        table.addCell(maquina.getSerie());
+        table.addCell(new Paragraph(maquina.getSerie(),fontdetallesgrandes));
+
         table.addCell(new Paragraph("Año:",fontbold));
-        table.addCell(maquina.getT_anio());
+        table.addCell(new Paragraph(maquina.getT_anio(),fontdetallesgrandes));
         table.addCell(new Paragraph("Horas:",fontbold));
-        table.addCell(maquina.getT_horas());
+        table.addCell(new Paragraph(maquina.getT_horas(),fontdetallesgrandes));
         table.addCell("   ");
         table.addCell("   ");
 
@@ -551,6 +554,18 @@ class DownloadPDF extends AsyncTask<Void, Integer, Integer>
         table.addCell(cell);
 
 
+        cell=new PdfPCell(new Paragraph("   "));
+        cell.setColspan(5);
+        cell.setBorder(0);
+        table.addCell(cell);
+        cell=new PdfPCell(new Paragraph("   "));
+        cell.setColspan(5);
+        cell.setBorder(0);
+        table.addCell(cell);
+        cell=new PdfPCell(new Paragraph("   "));
+        cell.setColspan(5);
+        cell.setBorder(0);
+        table.addCell(cell);
 
         //AGREGAR FOOTER
         Drawable f = context.getResources().getDrawable(R.drawable.repuestos);
@@ -571,6 +586,17 @@ class DownloadPDF extends AsyncTask<Void, Integer, Integer>
         cell.setColspan(5);
         cell.setBorder(0);
         table.addCell(cell);
+
+        cell=new PdfPCell(new Paragraph("   "));
+        cell.setColspan(5);
+        cell.setBorder(0);
+        table.addCell(cell);
+
+        cell=new PdfPCell(new Paragraph("   "));
+        cell.setColspan(5);
+        cell.setBorder(0);
+        table.addCell(cell);
+
 
         return table;
     }
@@ -720,7 +746,7 @@ class DownloadImages extends AsyncTask<Void, Integer, ArrayList<Imagen>>
     @Override
     protected ArrayList<Imagen> doInBackground(Void... params) {
         ArrayList<Imagen> imagens=new ArrayList<>();
-        String URL="http://grupoiiasa.com:84/WSMobile/ListadoMaquinariaUsada/tipos_listados.svc/maquinariasUsadasImagenesxId/?idmaquina="+mId.toString();
+        String URL="http://grupoiiasa.com:84/WSMobile/ListadoMaquinariaUsada/tipos_listados.svc/maquinariasUsadasImagenesxId/?idmaquina="+mId.toString()+"&pais=ecu";
         Log.i("OJO",URL);
         StringBuilder builder = new StringBuilder();
         HttpClient client = new DefaultHttpClient();

@@ -113,9 +113,10 @@ public class MainActivity extends Activity implements View.OnClickListener{
                     vintent.putExtras(b);
 
                     //Actualizo la preferencia de ultima fecha de sincronizacion
-                    Calendar c = Calendar.getInstance();
+                    Date cDate = new Date();
+                    String fDate = new SimpleDateFormat("yyyyMMdd").format(cDate);
                     SharedPreferences.Editor editor = prefs.edit();
-                    editor.putString("ultimoacceso", c.getTime().toString());
+                    editor.putString("ultimoacceso", fDate);
                     editor.commit();
 
                     startActivity(vintent);
@@ -276,7 +277,7 @@ class DownloadInfo extends AsyncTask<Void, Integer, Boolean>
             e.printStackTrace();
             Log.i("ERROR","NO PUDE CONVERTIR"+fechaini);
         }
-        String URL="http://grupoiiasa.com:84/WSMobile/ListadoMaquinariaUsada/tipos_listados.svc/maquinariasUsadas/?fechainicio=20150901&fechafin=20150930";
+        String URL="http://grupoiiasa.com:84/WSMobile/ListadoMaquinariaUsada/tipos_listados.svc/maquinariasUsadas/?fechainicio=20150901&fechafin=20150930&pais=ecu";
         //AQUI SE DEBE CONCATENAR LOS PARAMETROS CUANDO LOS TENGAS LISTOS PARA HACER EL REQUEST
         StringBuilder builder = new StringBuilder();
         HttpClient client = new DefaultHttpClient();

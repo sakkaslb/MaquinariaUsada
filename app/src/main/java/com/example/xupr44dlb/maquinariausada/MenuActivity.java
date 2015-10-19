@@ -30,8 +30,10 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
 public class MenuActivity extends AppCompatActivity implements View.OnClickListener, AdapterViewCompat.OnItemSelectedListener{
@@ -80,9 +82,10 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
             new DownloadInfo(this,this).execute();
             //GUARDAR ULTIMA FECHA DE DESCARGA
             SharedPreferences prefs=getSharedPreferences("loginUsuarios", Context.MODE_PRIVATE);
-            Calendar c = Calendar.getInstance();
             SharedPreferences.Editor editor = prefs.edit();
-            editor.putString("ultimoacceso", c.getTime().toString());
+            Date cDate = new Date();
+            String fDate = new SimpleDateFormat("yyyyMMdd").format(cDate);
+            editor.putString("ultimoacceso", fDate);
             editor.commit();
 
         }
