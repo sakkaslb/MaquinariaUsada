@@ -107,6 +107,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
                 if (resultado){
                     Toast.makeText(getApplicationContext(), "Acceso exitoso", Toast.LENGTH_LONG).show();
                     new DownloadInfo(this,this).execute();
+                    new RemoveData(this,this).execute();
                     Intent vintent=new Intent(MainActivity.this, MenuActivity.class);
                     Bundle b=new Bundle();
                     b.putBoolean("descargaInfo",false); //para pasar varios campos
@@ -254,7 +255,7 @@ class DownloadInfo extends AsyncTask<Void, Integer, Boolean>
     Context context;
     Activity activity;
     ProgressDialog dialog;
-   // String URL="https://dl.dropboxusercontent.com/u/51632131/prueba.html";
+
 
     public DownloadInfo(Context context, Activity actividad) {
         this.context=context;
@@ -278,6 +279,8 @@ class DownloadInfo extends AsyncTask<Void, Integer, Boolean>
             Log.i("ERROR","NO PUDE CONVERTIR"+fechaini);
         }
         String URL="http://grupoiiasa.com:84/WSMobile/ListadoMaquinariaUsada/tipos_listados.svc/maquinariasUsadas/?fechainicio=20150901&fechafin=20150930&pais=ecu";
+
+
         //AQUI SE DEBE CONCATENAR LOS PARAMETROS CUANDO LOS TENGAS LISTOS PARA HACER EL REQUEST
         StringBuilder builder = new StringBuilder();
         HttpClient client = new DefaultHttpClient();
@@ -438,7 +441,7 @@ class ValidateData extends AsyncTask<Void, Integer, Boolean>
 
     @Override
     protected Boolean doInBackground(Void... params) {
-       // Log.i("VALIDATE DATA","INICIE DO IN BACKGROUND");
+
         USQLiteHelper usuario=new USQLiteHelper(context,"DBUsada",null,1);
         SQLiteDatabase db=usuario.getWritableDatabase();
         Cursor c=db.rawQuery("SELECT id from Maquinaria where id="+id.toString(),null);
@@ -447,7 +450,7 @@ class ValidateData extends AsyncTask<Void, Integer, Boolean>
             result=false;
         }
         if (c.moveToFirst()){
-           // Log.i("VALIDATE DATA","ENTRE A MOVE TO FIRST");
+
             this.id=c.getInt(c.getColumnIndex("id"));
             try{
                 db.delete("Maquinaria","id="+id.toString(),null);
@@ -464,6 +467,122 @@ class ValidateData extends AsyncTask<Void, Integer, Boolean>
         }
         db.close();
         return result;
+
+    }
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+
+    }
+
+    @Override
+    protected void onPostExecute(Boolean aBoolean) {
+        super.onPostExecute(aBoolean);
+
+    }
+}
+
+class RemoveData extends AsyncTask<Void, Integer, Boolean>{
+
+    Context context;
+    Activity activity;
+
+    public RemoveData(Context context, Activity actividad) {
+        this.context=context;
+        this.activity=actividad;
+
+    }
+
+    @Override
+    protected Boolean doInBackground(Void... params) {
+        //Leyendo las preferencias para ver la ultima fecha de modificacion
+        SharedPreferences prefs=context.getSharedPreferences("loginUsuarios", Context.MODE_PRIVATE);
+
+        String URL="http://grupoiiasa.com:84/WSMobile/ListadoMaquinariaUsada/tipos_listados.svc/maquinariasusadasinactivas/?fechainicio=20150101&fechafin=20151001&pais=ecu";
+
+        //AQUI SE DEBE CONCATENAR LOS PARAMETROS CUANDO LOS TENGAS LISTOS PARA HACER EL REQUEST
+        StringBuilder builder = new StringBuilder();
+        HttpClient client = new DefaultHttpClient();
+        HttpGet httpGet = new HttpGet(URL);
+        try{
+            HttpResponse response = client.execute(httpGet);
+            StatusLine statusLine = response.getStatusLine();
+            int statusCode = statusLine.getStatusCode();
+            if(statusCode == 200){
+                HttpEntity entity = response.getEntity();
+                InputStream content = entity.getContent();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(content));
+                String line;
+                while((line = reader.readLine()) != null){
+                    builder.append(line);
+                }
+            } else {
+                Log.e(MainActivity.class.toString(),"Failed to get JSON object");
+            }
+        }catch(ClientProtocolException e){
+            e.printStackTrace();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        Log.i("OJO",builder.toString());
+        String json=builder.toString().replace("<html>","");
+        json=json.replace("<head>","");
+        json=json.replace("</head>","");
+        json=json.replace("<body>","");
+        json=json.replace("</body>","");
+        json=json.replace("</html>","");
+        Log.i("OJO",json);
+
+        try {
+
+            JSONObject jsonRootObject=new JSONObject(json);
+            JSONArray arr=jsonRootObject.optJSONArray("Maquina");
+            for (int i=0; i<arr.length(); i++){
+                JSONObject jsonProductObject = arr.getJSONObject(i);
+                Integer id=jsonProductObject.getInt("id");
+                new DeleteData(context,activity,id).execute();
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+    }
+
+    @Override
+    protected void onPostExecute(Boolean aBoolean) {
+        super.onPostExecute(aBoolean);
+    }
+}
+
+class DeleteData extends AsyncTask<Void, Integer, Boolean>
+{
+    Context context;
+    Activity activity;
+    Integer id;
+    Boolean result=false;
+
+    DeleteData(Context context, Activity activity, Integer id) {
+        this.context=context;
+        this.activity=activity;
+        this.id=id;
+
+    }
+
+    @Override
+    protected Boolean doInBackground(Void... params) {
+
+        USQLiteHelper usuario=new USQLiteHelper(context,"DBUsada",null,1);
+        SQLiteDatabase db=usuario.getWritableDatabase();
+        db.execSQL("DELETE from Maquinaria where id="+id.toString());
+        db.close();
+        return  true;
 
     }
 
