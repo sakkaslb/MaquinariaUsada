@@ -81,14 +81,6 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
             Log.i("MENU","ENTRE A DESCARGAR INFORMACION");
             new DownloadInfo(this,this).execute();
             new RemoveData(this,this).execute();
-            //GUARDAR ULTIMA FECHA DE DESCARGA
-            SharedPreferences prefs=getSharedPreferences("loginUsuarios", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = prefs.edit();
-            Date cDate = new Date();
-            String fDate = new SimpleDateFormat("yyyyMMdd").format(cDate);
-            editor.putString("ultimoacceso", fDate);
-            editor.commit();
-
         }
 
 

@@ -269,18 +269,15 @@ class DownloadInfo extends AsyncTask<Void, Integer, Boolean>
 
         //Leyendo las preferencias para ver la ultima fecha de modificacion
         SharedPreferences prefs=context.getSharedPreferences("loginUsuarios", Context.MODE_PRIVATE);
-        String fechaini=prefs.getString("ultimoacceso","Thu Jan 2 00:00:00 GMT-00:00 2015");
-        SimpleDateFormat formato=new SimpleDateFormat("EEE, MMM dd hh:mm:ss z yyyy");
-        try {
-            Date fecha=formato.parse(fechaini);
-            Log.i("OJO",fecha.toString());
-        } catch (ParseException e) {
-            e.printStackTrace();
-            Log.i("ERROR","NO PUDE CONVERTIR"+fechaini);
-        }
-        String URL="http://grupoiiasa.com:84/WSMobile/ListadoMaquinariaUsada/tipos_listados.svc/maquinariasUsadas/?fechainicio=20150901&fechafin=20150930&pais=ecu";
-
-
+        String year = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+        String fechaini=prefs.getString("ultimoacceso",year+"0101");
+        String DATE_FORMAT = "yyyyMMdd";
+        SimpleDateFormat sdf =
+                new SimpleDateFormat(DATE_FORMAT);
+        Calendar c1 = Calendar.getInstance(); // today
+        String fechafin=sdf.format(c1.getTime());
+        String URL="http://grupoiiasa.com:84/WSMobile/ListadoMaquinariaUsada/tipos_listados.svc/maquinariasUsadas/?fechainicio="+fechaini+"&fechafin="+fechafin+"&pais=ecu";
+        Log.i("MAIN ACTIVITY",URL);
         //AQUI SE DEBE CONCATENAR LOS PARAMETROS CUANDO LOS TENGAS LISTOS PARA HACER EL REQUEST
         StringBuilder builder = new StringBuilder();
         HttpClient client = new DefaultHttpClient();
@@ -496,11 +493,16 @@ class RemoveData extends AsyncTask<Void, Integer, Boolean>{
 
     @Override
     protected Boolean doInBackground(Void... params) {
-        //Leyendo las preferencias para ver la ultima fecha de modificacion
         SharedPreferences prefs=context.getSharedPreferences("loginUsuarios", Context.MODE_PRIVATE);
-
-        String URL="http://grupoiiasa.com:84/WSMobile/ListadoMaquinariaUsada/tipos_listados.svc/maquinariasusadasinactivas/?fechainicio=20150101&fechafin=20151001&pais=ecu";
-
+        String year = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+        String fechaini=prefs.getString("ultimoacceso",year+"0101");
+        String DATE_FORMAT = "yyyyMMdd";
+        SimpleDateFormat sdf =
+                new SimpleDateFormat(DATE_FORMAT);
+        Calendar c1 = Calendar.getInstance(); // today
+        String fechafin=sdf.format(c1.getTime());
+        String URL="http://grupoiiasa.com:84/WSMobile/ListadoMaquinariaUsada/tipos_listados.svc/maquinariasusadasinactivas/?fechainicio="+fechaini+"&fechafin="+fechafin+"&pais=ecu";
+        Log.i("MAIN REMOVE DATA",URL);
         //AQUI SE DEBE CONCATENAR LOS PARAMETROS CUANDO LOS TENGAS LISTOS PARA HACER EL REQUEST
         StringBuilder builder = new StringBuilder();
         HttpClient client = new DefaultHttpClient();
@@ -547,6 +549,14 @@ class RemoveData extends AsyncTask<Void, Integer, Boolean>{
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        //GUARDAR ULTIMA FECHA DE DESCARGA
+        SharedPreferences.Editor editor = prefs.edit();
+        Date cDate = new Date();
+        String fDate = new SimpleDateFormat("yyyyMMdd").format(cDate);
+        //editor.putString("ultimoacceso", fDate);
+        editor.putString("ultimoacceso", "20151015");
+        editor.commit();
         return true;
     }
 
@@ -558,6 +568,7 @@ class RemoveData extends AsyncTask<Void, Integer, Boolean>{
     @Override
     protected void onPostExecute(Boolean aBoolean) {
         super.onPostExecute(aBoolean);
+
     }
 }
 
