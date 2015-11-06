@@ -8,8 +8,7 @@
 
     <include
         android:id="@+id/tool_bar_completo"
-        layout="@layout/tool_bar_completo"
-        />
+        layout="@layout/tool_bar_completo"/>
 
     <ScrollView
         android:id="@+id/scrollView"
@@ -26,8 +25,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-;
-               <!-- This is the Gallery -->
+                ;
+                <!-- This is the Gallery -->
 
                 <Gallery xmlns:android="http://schemas.android.com/apk/res/android"
                     android:id="@+id/gallery"
@@ -173,7 +172,7 @@
                 android:layout_toRightOf="@+id/lblDetalleFamilia"
                 android:layout_toEndOf="@+id/lblDetalleFamilia"
                 android:layout_marginLeft="280dp"
-                 />
+                />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -194,7 +193,7 @@
                 android:layout_marginTop="@dimen/size3"
                 android:layout_below="@+id/lblDetalleModelo"
                 android:layout_toRightOf="@+id/imageView3"
-                 />
+                />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -312,10 +311,12 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/imageView8"
                 android:src="@drawable/ic_bullet"
-                android:layout_alignParentBottom="true"
                 android:layout_below="@+id/lblDetalleDescripcion"
                 android:layout_alignLeft="@+id/imageView2"
-                android:layout_alignStart="@+id/imageView2" />
+                android:layout_alignStart="@+id/imageView2"
+                android:layout_alignBottom="@+id/txtDetalleDescripcion"
+                android:layout_alignRight="@+id/imageView2"
+                android:layout_alignEnd="@+id/imageView2" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -358,11 +359,172 @@
                 android:layout_alignTop="@+id/imageView7"
                 android:layout_toRightOf="@+id/imageView7"
                 android:layout_toEndOf="@+id/imageView7" />
+            
+            
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/layoutExistenteCliente"
+                android:layout_below="@+id/txtDetalleDescripcion"
+                android:layout_marginTop="@dimen/size4" >
+                <View
+                    android:id="@+id/line2"
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/lblBannerExistente"
+                    android:layout_marginTop="@dimen/size4"
+                    android:layout_marginLeft="@dimen/size2"
+                    android:id="@+id/lblBannerExistente"
+                    android:textSize="35dp"
+                    android:textColor="@color/color_accent" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="@string/lblCliente"
+                        android:layout_marginLeft="@dimen/size"
+                        android:id="@+id/lblBusquedaCliente"
+                       />
+
+                    <AutoCompleteTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtBusquedaCliente"
+                        android:hint="@string/lblHintCliente"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="@dimen/size5"
+                        />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="@string/lblIngresarInfluencer"
+                        android:layout_marginLeft="@dimen/size"
+                        android:id="@+id/lblNombreContacto"
+                       />
+
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName"
+                        android:id="@+id/txtNombreInfluencer"
+                        android:hint="@string/lblHintContacto"
+                        android:layout_marginLeft="@dimen/size"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="@dimen/size5"
+                        android:ems="10"/>
+
+                </LinearLayout>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_below="@+id/layoutExistenteCliente"
+                android:id="@+id/layoutNuevoCliente"
+                android:layout_marginTop="@dimen/size4">
+                <View
+                    android:id="@+id/line3"
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/lblBannerNuevo"
+                    android:layout_marginTop="@dimen/size4"
+                    android:layout_marginStart="@dimen/size7"
+                    android:id="@+id/lblBannerNuevo"
+                    android:textSize="35dp"
+                    android:textColor="@color/color_accent" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="@string/lblNuevoCliente"
+                        android:layout_marginLeft="@dimen/size"
+                        android:id="@+id/lblNuevoCliente"/>
+
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName"
+                        android:id="@+id/txtNombreNuevoCliente"
+                        android:hint="@string/lblHintNuevoCliente"
+                        android:layout_marginLeft="@dimen/size"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="@dimen/size5"
+                        android:ems="10"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="@string/lblIngresarInfluencer"
+                        android:layout_marginLeft="@dimen/size"
+                        android:id="@+id/lblNuevoContacto"
+                     />
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName"
+                        android:id="@+id/txtNuevoClienteContacto"
+                        android:hint="@string/lblHintContacto"
+                        android:layout_marginLeft="@dimen/size"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="@dimen/size5"
+                        android:ems="10"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            </LinearLayout>
+
+            <Button
+                style="@style/button"
+                android:id="@+id/btnGenerarPDFClienteExistente"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:text="@string/BtnGenerarPDF"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/layoutExistenteCliente"
+                android:layout_marginRight="@dimen/size7"
+                android:layout_marginBottom="@dimen/size5"/>
 
         </RelativeLayout>
+
     </ScrollView>
-
-
-
 
 </RelativeLayout>

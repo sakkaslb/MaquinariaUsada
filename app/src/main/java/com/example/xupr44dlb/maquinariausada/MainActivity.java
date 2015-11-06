@@ -554,8 +554,8 @@ class RemoveData extends AsyncTask<Void, Integer, Boolean>{
         SharedPreferences.Editor editor = prefs.edit();
         Date cDate = new Date();
         String fDate = new SimpleDateFormat("yyyyMMdd").format(cDate);
-        //editor.putString("ultimoacceso", fDate);
-        editor.putString("ultimoacceso", "20151015");
+        editor.putString("ultimoacceso", fDate);
+        //editor.putString("ultimoacceso", "20151015");
         editor.commit();
         return true;
     }

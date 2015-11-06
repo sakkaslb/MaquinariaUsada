@@ -100,7 +100,17 @@
     <string name="lblDetalleDescripcion">Descripción:</string>
     <string name="lblDetalleHoras">Horas:</string>
     <string name="lblDetalleGarantia">Garantía:</string>
+    <string name="lblBannerExistente">Cotización a cliente existente</string>
+    <string name="lblBannerNuevo">Cotización a cliente nuevo</string>
+    <string name="lblCliente">Buscar al cliente:</string>
+    <string name="lblHintCliente">Busque por el nombre o código</string>
+    <string name="lblIngresarCliente">Ingrese el nombre del cliente:</string>
+    <string name="lblHintContacto">Ingrese el nombre del contacto a quien se dirige la cotización</string>
+    <string name="lblIngresarInfluencer">Contacto:</string>
+    <string name="BtnGenerarPDF">Generar PDF</string>
 
+    <string name="lblNuevoCliente">Nombre del Cliente:</string>
+    <string name="lblHintNuevoCliente">Ingrese nombre del cliente nuevo</string>
     <!--Email-->
     <string name="label_email">Enviar por email</string>
     <string name="label_preview">Vista previa</string>

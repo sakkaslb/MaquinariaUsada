@@ -228,7 +228,7 @@ public class DetalleMaquinaActivity extends Activity implements View.OnClickList
                 final String nombre=txtFamilia.getText().toString().replace(" ","")+"_"+txtModelo.getText().toString().replace(" ","")+"_"+txtSerie.getText().toString().replace(" ","");
                 Log.i("OJO","ENTRE A COTIZAR "+nombre);
                 try {
-                    Integer result=0;
+
                     new DownloadPDF(this,nombre, this,imagenes, maquina).execute();
 
                 } catch (Exception e){
